@@ -32,7 +32,7 @@ export class PiContainer {
     });
   }
 
-  selectPi(piData: string): void {
+  selectPi(): void {
     // TODO: implement select pi, so it saves it in a state in the service
   }
 
