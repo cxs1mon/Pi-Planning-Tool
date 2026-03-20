@@ -1,23 +1,27 @@
+.pi-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  align-items: center;
+}
+
 .pi-overview__box {
   background-color: #eceeef;
   border-radius: 10px;
   color: black;
   padding: 16px;
   font-weight: 500;
+  height: fit-content;
 }
 
-#date-from,
-#date-to,
-#pi-name {
-  color: black;
-}
-
-.create-pi {
+.create-pi, .select-pi {
   display: flex;
   flex-direction: column;
 }
 
-.create-pi__submit {
+.create-pi__submit, .select-pi__submit {
   padding: 10px;
   border-radius: 25px;
   border: none;

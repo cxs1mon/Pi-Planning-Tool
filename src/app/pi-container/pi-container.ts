@@ -9,7 +9,13 @@ import { PiResponse } from '../../../Model/pi-model';
   styleUrl: './pi-container.scss',
 })
 export class PiContainer {
+  piList: PiResponse[] = [];
+
   private dataService = inject(DataService);
+
+  ngOnInit(): void {
+    this.getAllPis();
+  }
 
   createNewPi(piData: PiResponse): void {
     console.log('Gesendete Daten:', piData);
@@ -25,7 +31,25 @@ export class PiContainer {
       },
     });
   }
+
+  selectPi(piData: string): void {
+    // TODO: implement select pi, so it saves it in a state in the service
+  }
+
   navigate(): void {
     console.log('navigate');
+  }
+
+  getAllPis() {
+    this.dataService.getPis().subscribe({
+      next: (piList: PiResponse[]) => {
+        this.piList = piList;
+        console.log('Erfasste PIs:', piList);
+      },
+      error: (err) => {
+        console.error('Fehler beim abfragen:', err);
+        console.error('Backend Fehlertext:', err.error);
+      },
+    });
   }
 }

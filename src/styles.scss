@@ -2,7 +2,6 @@
 
 .theme-start {
   --mat-sys-surface: #5495cf;
-  --mat-sys-on-surface: white;
 }
 
 .theme-default {
@@ -35,7 +34,6 @@ body {
 .app__container {
   min-height: 100vh;
   background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
   padding: 16px 32px;
 }
 /* You can add global styles to this file, and also import other style files */
