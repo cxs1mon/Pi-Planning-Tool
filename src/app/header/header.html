@@ -1,0 +1,14 @@
+<section class="header">
+  <h1 class="header__title header__title--{{ themeColor }}">PI Planungstool</h1>
+  <img
+    ngSrc="./Logo_{{ themeColor }}.png"
+    alt="{{ themeColor }} Logo"
+    height="497"
+    width="1280"
+    class="header__logo header__logo--{{ themeColor }}"
+    priority
+  />
+</section>
+@if (themeColor === "blue") {
+  <hr class="header__horizontal-line" />
+}

@@ -1,12 +1,22 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { Header } from './header/header';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Header, NgClass],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = signal('Pi-Planning-Tool');
+  private router = inject(Router);
+
+  get themeClass(): string {
+    return this.router.url === '/' ? 'theme-start' : 'theme-default';
+  }
+
+  get themeColor(): string {
+    return this.router.url === '/' ? 'white' : 'blue';
+  }
 }

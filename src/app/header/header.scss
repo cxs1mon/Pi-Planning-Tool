@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__title {
+  font-size: 32px;
+}
+
+.header__title--white {
+  color: white;
+}
+
+.header__title--blue {
+  color: #2167ae;
+}
+
+.header__logo {
+  width: 200px;
+  height: auto;
+}
+
+.header__horizontal-line {
+  height: 2px;
+  background: #2167ae;
+  border: 0;
+}
