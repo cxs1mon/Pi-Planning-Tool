@@ -18,4 +18,8 @@ export class DataService {
   getPis(): Observable<PiResponse[]> {
     return this.http.get<PiResponse[]>(`${this.baseUrl}/api/pis`);
   }
+
+  createPi(pi: PiResponse): Observable<PiResponse> {
+    return this.http.post<PiResponse>(`${this.baseUrl}/api/pis`, pi);
+  }
 }
