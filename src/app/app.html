@@ -1,4 +1,7 @@
 <section [ngClass]="themeClass" class="app__container">
   <app-header [themeColor]="themeColor" />
+  @if (this.router.url !== '/') {
+    <app-navigation />
+  }
   <router-outlet />
 </section>

@@ -1,0 +1,19 @@
+.nav__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.nav__list-element {
+  list-style-type: none;
+}
+
+.nav__link {
+  color: #2167ae;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.active {
+  font-weight: bold;
+}
