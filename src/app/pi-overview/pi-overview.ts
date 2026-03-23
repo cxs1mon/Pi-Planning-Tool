@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   AbstractControl,
@@ -11,7 +11,6 @@ import {
 } from '@angular/forms';
 import { MatError, MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { PiResponse } from '../../../Model/pi-model';
-import { MatOption, MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-pi-overview',
@@ -23,18 +22,19 @@ import { MatOption, MatSelect } from '@angular/material/select';
     MatError,
     MatInputModule,
     MatButtonModule,
-    MatSelect,
-    MatOption,
   ],
   templateUrl: './pi-overview.html',
   styleUrl: './pi-overview.scss',
 })
 export class PiOverview {
-  @Output() sendCreateClick = new EventEmitter<PiResponse>();
-  @Output() sendSelectClick = new EventEmitter<string>();
-  @Input() piList: PiResponse[] = [];
+  piList = input<PiResponse[]>([]);
+  sendCreateClick = output<PiResponse>();
+  sendSelectClick = output<number>();
 
-  selection = new FormControl<string>('', { validators: [Validators.required] });
+  clickedSelect = false;
+  clickedCreate = false;
+
+  selection = new FormControl<number | null>(null, Validators.required);
 
   piForm = new FormGroup(
     {
@@ -54,7 +54,6 @@ export class PiOverview {
     if (new Date(end) <= new Date(start)) {
       return { dateRangeInvalid: true };
     }
-
     return null;
   }
 
@@ -66,6 +65,7 @@ export class PiOverview {
         startDate: this.piForm.controls.startDate.value ?? '',
         endDate: this.piForm.controls.endDate.value ?? '',
       };
+      this.clickedCreate = true;
       this.sendCreateClick.emit(newPi);
     } else {
       console.warn('Bitte alle Felder ausfüllen');
@@ -74,14 +74,13 @@ export class PiOverview {
   }
 
   selectPiForm(): void {
-    console.log('clicked select pi');
     this.selection.markAllAsTouched();
-    if (this.selection.valid && this.selection.value) {
-      console.log(this.piForm.value);
+    if (this.selection.valid && this.selection.value != null) {
+      this.clickedSelect = true;
       this.sendSelectClick.emit(this.selection.value);
-    } else {
-      console.warn('Bitte PI auswählen');
       return;
     }
+
+    console.warn('Bitte PI auswählen');
   }
 }

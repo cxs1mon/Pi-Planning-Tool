@@ -1,21 +1,26 @@
 <section class="pi-overview">
   <article class="pi-overview__box pi-overview__box--right">
     <h2>Program Increment auswählen:</h2>
+
     <form class="select-pi" (ngSubmit)="selectPiForm()">
       <mat-form-field>
         <mat-label>Program Increment</mat-label>
-        <mat-select [formControl]="selection">
-          @for (pi of piList; track pi.id) {
-            <mat-option [value]="pi.id!" class="select-pi__option">{{ pi.name }}</mat-option>
+
+        <select matNativeControl [formControl]="selection">
+          <option [ngValue]="null">Bitte auswählen</option>
+          @for (pi of piList(); track pi.id) {
+            <option [ngValue]="pi.id">{{ pi.name }}</option>
           }
-        </mat-select>
+        </select>
+
         @if (selection.touched && selection.hasError('required')) {
-          <mat-error>
-            Bitte PI auswählen
-          </mat-error>
+          <mat-error>Bitte PI auswählen</mat-error>
         }
       </mat-form-field>
-      <button type="submit" class="select-pi__submit" [disabled]="piList.length <= 0">Auswählen</button>
+
+      <button type="submit" class="select-pi__submit" [class.clicked]="clickedSelect">
+        Auswählen
+      </button>
     </form>
   </article>
 
@@ -26,7 +31,7 @@
         <mat-label>PI Name</mat-label>
         <input id="pi-name" matInput placeholder="Z.B. PI 2026 Q1" formControlName="name" />
         @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('required')) {
-          <mat-error> Bitte Name eingeben </mat-error>
+          <mat-error> Bitte Name eingeben</mat-error>
         }
       </mat-form-field>
       <mat-form-field class="create-pi__field--date-from">
@@ -39,7 +44,7 @@
           type="date"
         />
         @if (piForm.get('startDate')?.touched && piForm.get('startDate')?.hasError('required')) {
-          <mat-error> Bitte Startdatum eingeben </mat-error>
+          <mat-error> Bitte Startdatum eingeben</mat-error>
         }
       </mat-form-field>
       <mat-form-field class="create-pi__field--date-to">
@@ -52,14 +57,15 @@
           type="date"
         />
         @if (piForm.get('endDate')?.touched && piForm.get('endDate')?.hasError('required')) {
-          <mat-error> Bitte Enddatum eingeben </mat-error>
+          <mat-error> Bitte Enddatum eingeben</mat-error>
         }
       </mat-form-field>
       @if (piForm.hasError('dateRangeInvalid') && piForm.touched) {
-        <mat-error> Enddatum muss nach dem Startdatum sein </mat-error>
+        <mat-error> Enddatum muss nach dem Startdatum sein</mat-error>
       }
-      <button type="submit" class="create-pi__submit">Erstellen</button>
+      <button type="submit" class="create-pi__submit" [class.clicked]="clickedCreate">
+        Erstellen
+      </button>
     </form>
   </article>
-
 </section>

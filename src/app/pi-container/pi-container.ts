@@ -1,55 +1,60 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DataService } from '../service/dataService';
 import { PiOverview } from '../pi-overview/pi-overview';
 import { PiResponse } from '../../../Model/pi-model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-pi-container',
   imports: [PiOverview],
   templateUrl: './pi-container.html',
   styleUrl: './pi-container.scss',
 })
-export class PiContainer {
+export class PiContainer implements OnInit {
   piList: PiResponse[] = [];
-
+  router = inject(Router);
   private dataService = inject(DataService);
 
-  ngOnInit(): void {
-    this.getAllPis();
-  }
-
   createNewPi(piData: PiResponse): void {
-    console.log('Gesendete Daten:', piData);
-
     this.dataService.createPi(piData).subscribe({
       next: (createdPi: PiResponse) => {
-        console.log('PI erfolgreich erstellt:', createdPi);
-        this.navigate();
+        this.setPiId(createdPi.id!);
+        setTimeout(() => {
+          this.navigate();
+        }, 400);
       },
       error: (err) => {
         console.error('Fehler beim Erstellen:', err);
-        console.error('Backend Fehlertext:', err.error);
       },
     });
   }
 
-  selectPi(): void {
-    // TODO: implement select pi, so it saves it in a state in the service
+  selectPi(selectedPiId: number): void {
+    this.setPiId(selectedPiId);
+    setTimeout(() => {
+      this.navigate();
+    }, 400);
   }
 
   navigate(): void {
-    console.log('navigate');
+    this.router.navigate(['/overview']);
   }
 
-  getAllPis() {
+  ngOnInit() {
+    this.getAllPis();
+  }
+
+  getAllPis(): void {
     this.dataService.getPis().subscribe({
       next: (piList: PiResponse[]) => {
         this.piList = piList;
-        console.log('Erfasste PIs:', piList);
       },
       error: (err) => {
         console.error('Fehler beim abfragen:', err);
-        console.error('Backend Fehlertext:', err.error);
       },
     });
+  }
+
+  setPiId(piId: number): void {
+    this.dataService.setPi(piId);
   }
 }
