@@ -13,6 +13,16 @@
       </li>
       <li class="nav__list-element">
         <a
+          [routerLink]="['/employees', piId]"
+          class="nav__link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Mitarbeiter
+        </a>
+      </li>
+      <li class="nav__list-element">
+        <a
           [routerLink]="['/settings', piId]"
           class="nav__link"
           routerLinkActive="active"

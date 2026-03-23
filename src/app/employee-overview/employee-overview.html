@@ -1,0 +1,13 @@
+<section class="employees">
+  <h2 class="employees__title">Mitarbieterübersicht</h2>
+  <article class="employees__list">
+    @for (e of employeesList(); track e.id) {
+      <div class="employees__element">
+        <p class="employees__value employees__value--name">{{ e.name }}</p>
+        <p class="employees__value employees__value--role">{{ e.role }}</p>
+        <p class="employees__value employees__value--fe-capacity">{{ e.feCapacity }}</p>
+        <p class="employees__value employees__value--be-capacity">{{ e.beCapacity }}</p>
+      </div>
+    }
+  </article>
+</section>

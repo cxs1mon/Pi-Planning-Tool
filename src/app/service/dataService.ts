@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PiResponse } from '../../../Model/pi-model';
 import { HealthResponse } from '../../../Model/health-model';
+import { EmployeeResponse } from '../../../Model/employee-model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,18 @@ export class DataService {
   private baseUrl = 'http://localhost:3001';
   pi = signal<number | null>(null);
 
+  // API status
+
   getHealth(): Observable<HealthResponse> {
     return this.http.get<HealthResponse>(`${this.baseUrl}/health`);
   }
+
+  // PI State
+  setPi(pi: number) {
+    this.pi.set(pi);
+  }
+
+  // Program Increments
 
   getPis(): Observable<PiResponse[]> {
     return this.http.get<PiResponse[]>(`${this.baseUrl}/api/pis`);
@@ -36,7 +46,9 @@ export class DataService {
     return this.http.delete<PiResponse>(`${this.baseUrl}/api/pis/${piId}`);
   }
 
-  setPi(pi: number) {
-    this.pi.set(pi);
+  // Employees
+
+  getEmployees(piId: number): Observable<EmployeeResponse[]> {
+    return this.http.get<EmployeeResponse[]>(`${this.baseUrl}/api/pis/${piId}/employees`);
   }
 }

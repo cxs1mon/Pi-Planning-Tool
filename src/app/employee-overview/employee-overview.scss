@@ -1,0 +1,24 @@
+.employees {
+  padding: 16px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.employees__title {
+  color: #23366f;
+}
+
+.employees__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.employees__element {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 0 30px;
+  background-color: #eceeef;
+  border-radius: 20px;
+  margin: 5px 0;
+}
