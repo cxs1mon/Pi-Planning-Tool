@@ -19,7 +19,7 @@ export class PiContainer implements OnInit {
       next: (createdPi: PiResponse) => {
         this.setPiId(createdPi.id!);
         setTimeout(() => {
-          this.navigate();
+          this.navigate(createdPi.id!);
         }, 400);
       },
       error: (err) => {
@@ -29,14 +29,13 @@ export class PiContainer implements OnInit {
   }
 
   selectPi(selectedPiId: number): void {
-    this.setPiId(selectedPiId);
     setTimeout(() => {
-      this.navigate();
+      this.navigate(selectedPiId);
     }, 400);
   }
 
-  navigate(): void {
-    this.router.navigate(['/overview']);
+  navigate(selectedPiId: number): void {
+    this.router.navigate(['/overview', selectedPiId]);
   }
 
   ngOnInit() {

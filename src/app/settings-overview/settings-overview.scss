@@ -1,0 +1,70 @@
+.settings {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.edit-pi {
+  display: flex;
+  flex-direction: column;
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.edit-pi__button {
+  padding: 10px;
+  border-radius: 25px;
+  border: none;
+  width: 200px;
+  color: white;
+}
+
+.edit-pi__button--submit {
+  background: #5495cf;
+}
+
+.edit-pi__button--delete {
+  background-color: #ff7569;
+}
+
+// codepen shimmer effect template from @Raphaelakpofure x ---
+.edit-pi__submit.clicked {
+  animation: shimmer 0.6s linear 1 forwards;
+  background: linear-gradient(
+    to right,
+    // Colors picked from AI based on base color #5495cf
+    #4a86ba 5%,
+    /* dunkler */ #6fa8dc 25%,
+    /* heller (Shimmer) */ #4a86ba 35%
+  );
+  background-size: 300px 100%;
+}
+.edit-pi__delete.clicked {
+  animation: shimmer 0.6s linear 1 forwards;
+  background: linear-gradient(
+    to right,
+    // Colors picked from AI based on base color #5495cf
+    #4a86ba 5%,
+    /* dunkler */ #6fa8dc 25%,
+    /* heller (Shimmer) */ #4a86ba 35%
+  );
+  background-size: 300px 100%;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -50px 0;
+  }
+  to {
+    background-position: 300px 0;
+  }
+}
+
+.edit-pi__field input {
+  color: black !important;
+}

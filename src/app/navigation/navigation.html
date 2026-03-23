@@ -2,10 +2,24 @@
   <nav>
     <ul class="nav__list">
       <li class="nav__list-element">
-        <a routerLink="/overview" class="nav__link" routerLinkActive="active">Planung</a>
+        <a
+          [routerLink]="['/overview', piId]"
+          class="nav__link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Planung
+        </a>
       </li>
       <li class="nav__list-element">
-        <a routerLink="/settings" class="nav__link" routerLinkActive="active">PI Einstellungen</a>
+        <a
+          [routerLink]="['/settings', piId]"
+          class="nav__link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          PI Einstellungen
+        </a>
       </li>
     </ul>
   </nav>

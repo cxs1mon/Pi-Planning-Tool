@@ -52,3 +52,7 @@
     background-position: 300px 0;
   }
 }
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-text-field__input {
+  color: black !important;
+}
