@@ -1,0 +1,36 @@
+.dialog {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 0;
+}
+
+.dialog__cancel-btn {
+  border: none;
+  background: none;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.dialog__title {
+  margin-top: 0;
+  padding: 0 32px;
+  font-size: 18px;
+}
+
+.dialog__form {
+  padding: 0 32px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dialog__button--submit {
+  padding: 10px;
+  border-radius: 25px;
+  border: none;
+  width: 100%;
+  color: white;
+  background: #5495cf;
+}

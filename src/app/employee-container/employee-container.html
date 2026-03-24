@@ -1,1 +1,4 @@
-<app-employee-overview [employeesList]="$allEmployees()" />
+<app-employee-overview
+  [employeeList]="$allEmployees()"
+  (sendOpenCreateDialog)="openCreateDialog()"
+/>

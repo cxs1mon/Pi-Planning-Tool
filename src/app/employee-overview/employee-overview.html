@@ -1,13 +1,38 @@
 <section class="employees">
   <h2 class="employees__title">Mitarbieterübersicht</h2>
+  <button class="employees__add-button" (click)="openDialog()" (keydown)="openDialog()">
+    <img
+      ngSrc="./add_angular_icon.png"
+      alt="Add employee Icon"
+      height="24"
+      width="24"
+      class="employees__add-icon"
+      priority
+    />
+  </button>
   <article class="employees__list">
-    @for (e of employeesList(); track e.id) {
-      <div class="employees__element">
-        <p class="employees__value employees__value--name">{{ e.name }}</p>
-        <p class="employees__value employees__value--role">{{ e.role }}</p>
-        <p class="employees__value employees__value--fe-capacity">{{ e.feCapacity }}</p>
-        <p class="employees__value employees__value--be-capacity">{{ e.beCapacity }}</p>
-      </div>
+    @if (employeeList().length <= 0) {
+      <p class="employee__notice">Keine Mitarbeiter erfasst.</p>
+    } @else {
+      @for (
+        e of $showAll()
+          ? employeeList().slice().reverse()
+          : employeeList().slice().reverse().slice(0, 4);
+        track e.id
+      ) {
+        <div class="employees__element">
+          <p class="employees__value employees__value--name">{{ e.name }}</p>
+          <p class="employees__value employees__value--role">{{ e.role }}</p>
+          <p class="employees__value employees__value--fe-capacity">{{ e.feCapacity }}</p>
+          <p class="employees__value employees__value--be-capacity">{{ e.beCapacity }}</p>
+        </div>
+      }
+
+      @if (employeeList().length > 4) {
+        <button (click)="$showAll.set(!$showAll())" class="employees__toggle-visibility">
+          {{ $showAll() ? 'Weniger anzeigen' : 'Alle anzeigen' }}
+        </button>
+      }
     }
   </article>
 </section>

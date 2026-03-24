@@ -3,6 +3,8 @@ import { EmployeeOverview } from '../employee-overview/employee-overview';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../service/dataService';
 import { EmployeeResponse } from '../../../Model/employee-model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogContainer } from '../dialog-container/dialog-container';
 
 @Component({
   selector: 'app-employee-container',
@@ -14,6 +16,8 @@ export class EmployeeContainer implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private dataService = inject(DataService);
   private piId = 0;
+  dialog = inject(MatDialog);
+
   public $allEmployees: WritableSignal<EmployeeResponse[]> = signal<EmployeeResponse[]>([]);
 
   ngOnInit(): void {
@@ -49,6 +53,34 @@ export class EmployeeContainer implements OnInit {
       },
       error: (err) => {
         console.error('Fehler beim Abfragen:', err);
+      },
+    });
+  }
+
+  openCreateDialog() {
+    this.dialog
+      .open(DialogContainer, {
+        data: { mode: 'create', type: 'employee' },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.addEmployee(result);
+        }
+      });
+  }
+
+  addEmployee(newEmployee: EmployeeResponse) {
+    const employeeWithId: EmployeeResponse = {
+      ...newEmployee,
+      id: this.piId,
+    };
+    this.dataService.createEmployee(employeeWithId).subscribe({
+      next: () => {
+        this.getEmployees();
+      },
+      error: (err) => {
+        console.error('Fehler beim Erstellen:', err);
       },
     });
   }

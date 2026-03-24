@@ -51,4 +51,11 @@ export class DataService {
   getEmployees(piId: number): Observable<EmployeeResponse[]> {
     return this.http.get<EmployeeResponse[]>(`${this.baseUrl}/api/pis/${piId}/employees`);
   }
+
+  createEmployee(newEmployee: EmployeeResponse): Observable<EmployeeResponse> {
+    return this.http.post<EmployeeResponse>(
+      `${this.baseUrl}/api/pis/${newEmployee.id}/employees`,
+      newEmployee,
+    );
+  }
 }

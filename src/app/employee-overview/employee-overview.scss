@@ -2,15 +2,39 @@
   padding: 16px 0;
   max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
 }
 
 .employees__title {
   color: #23366f;
 }
 
+.employees__add-button {
+  border: none;
+  background: none;
+  justify-self: end;
+}
+
+.employees__add-icon {
+  background-color: #5495cf;
+  padding: 5px;
+  border-radius: 8px;
+  width: 20px;
+  height: auto;
+  justify-self: end;
+}
+
+.employee__notice {
+  margin: 10px auto;
+  grid-column: 1 / -1;
+}
+
 .employees__list {
   display: flex;
   flex-direction: column;
+  grid-column: 1 / -1;
 }
 
 .employees__element {
@@ -21,4 +45,12 @@
   background-color: #eceeef;
   border-radius: 20px;
   margin: 5px 0;
+}
+
+.employees__toggle-visibility {
+  border: none;
+  background: none;
+  font-size: 16px;
+  margin: 10px auto;
+  grid-column: 1 / -1;
 }

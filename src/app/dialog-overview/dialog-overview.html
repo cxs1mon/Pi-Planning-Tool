@@ -1,0 +1,84 @@
+<section class="dialog">
+  @if (mode() === 'edit') {
+    @if (type() === 'employee') {
+      Mitarbeiter bearbeiten
+    } @else {
+      Feature bearbeiten
+    }
+  } @else {
+    @if (type() === 'employee') {
+      <button class="dialog__cancel-btn" (click)="onCancelClick()" (keydown)="onCancelClick()">
+        <img
+          ngSrc="./close_angular_icon.png"
+          alt="Close dialog Icon"
+          height="24"
+          width="24"
+          class="dialog__cancel-icon"
+          priority
+        />
+      </button>
+      <h3 class="dialog__title">Mitarbeiter erfassen</h3>
+      <form (ngSubmit)="onSaveClick()" [formGroup]="employeeForm" class="dialog__form">
+        <mat-form-field class="dialog__field--name dialog__field">
+          <mat-label>Name</mat-label>
+          <input id="emp-name" matInput placeholder="Z.B. Sarina Muster" formControlName="name" />
+          @if (
+            employeeForm.get('name')?.touched && employeeForm.get('name')?.hasError('required')
+          ) {
+            <mat-error> Bitte Name eingeben</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="dialog__field--role dialog__field">
+          <mat-label>Rolle</mat-label>
+          <input
+            id="role"
+            matInput
+            placeholder="Z.B. Developer"
+            formControlName="role"
+            type="text"
+          />
+          @if (
+            employeeForm.get('role')?.touched && employeeForm.get('role')?.hasError('required')
+          ) {
+            <mat-error> Bitte Rolle eingeben</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="dialog__field--fe-capacity dialog__field">
+          <mat-label>Frontend Kapazität</mat-label>
+          <input
+            id="fe-capa"
+            matInput
+            placeholder="Z.B. 21"
+            formControlName="capacityFe"
+            type="number"
+          />
+          @if (
+            employeeForm.get('capacityFe')?.touched &&
+            employeeForm.get('capacityFe')?.hasError('required')
+          ) {
+            <mat-error> Bitte Frontend Kapazität eingeben</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="dialog__field--be-capacity dialog__field">
+          <mat-label>Backend Kapazität</mat-label>
+          <input
+            id="be-capa"
+            matInput
+            placeholder="Z.B. 6"
+            formControlName="capacityBe"
+            type="number"
+          />
+          @if (
+            employeeForm.get('capacityBe')?.touched &&
+            employeeForm.get('capacityBe')?.hasError('required')
+          ) {
+            <mat-error> Bitte Backend Kapazität eingeben</mat-error>
+          }
+        </mat-form-field>
+        <button class="dialog__button dialog__button--submit" type="submit">Speichern</button>
+      </form>
+    } @else {
+      Feature erstellen
+    }
+  }
+</section>
