@@ -32,11 +32,10 @@ export class DialogOverview {
   mode = input<'create' | 'edit' | 'delete'>('create');
   type = input<'employee' | 'feature' | 'pi'>('employee');
   employee = input<EmployeeResponse>();
+  feature = input<FeatureResponse>();
   sendSaveClick = output<EmployeeResponse | FeatureResponse>();
   sendDeleteClick = output<void>();
   sendCancelClick = output<void>();
-
-  effortFormError: string | null = null;
 
   featureEffortValidator(): ValidatorFn {
     return (form: AbstractControl): ValidationErrors | null => {
@@ -105,6 +104,17 @@ export class DialogOverview {
           role: employee.role,
           capacityFe: employee.feCapacity,
           capacityBe: employee.beCapacity,
+        });
+      }
+      const feature = this.feature();
+
+      if (feature) {
+        this.featureForm.patchValue({
+          featureNumber: feature.featureNumber,
+          title: feature.title,
+          description: feature.description,
+          effortFe: feature.feEffort,
+          effortBe: feature.beEffort,
         });
       }
     });

@@ -1,5 +1,5 @@
 <section class="dialog">
-  <button class="dialog__cancel-x-btn" (click)="onCancelClick()" (keydown)="onCancelClick()">
+  <button class="dialog__cancel-x-btn" (click)="onCancelClick()" (keydown.esc)="onCancelClick()">
     <img
       ngSrc="./close_angular_icon.png"
       alt="Close dialog Icon"
@@ -7,6 +7,7 @@
       width="24"
       class="dialog__cancel-icon"
       priority
+      type="button"
     />
   </button>
 
@@ -14,44 +15,21 @@
     @if (type() === 'employee') {
       <h3 class="dialog__title">Mitarbeiter löschen</h3>
       <p class="dialog__delete-hint">Möchten Sie diesen Mitarbeiter wirklich löschen?</p>
-      <div class="dialog__delete-buttons">
-        <button
-          class="dialog__button dialog__button--cancel"
-          type="button"
-          (click)="onCancelClick()"
-        >
-          Abbrechen
-        </button>
-        <button
-          class="dialog__button dialog__button--delete"
-          type="button"
-          (click)="onDeleteClick()"
-        >
-          Löschen
-        </button>
-      </div>
     } @else if (type() === 'feature') {
       <h3 class="dialog__title">Feature löschen</h3>
+      <p class="dialog__delete-hint">Möchten Sie dieses Feature wirklich löschen?</p>
     } @else {
       <h3 class="dialog__title">PI löschen</h3>
       <p class="dialog__delete-hint">Möchten Sie dieses PI wirklich löschen?</p>
-      <div class="dialog__delete-buttons">
-        <button
-          class="dialog__button dialog__button--cancel"
-          type="button"
-          (click)="onCancelClick()"
-        >
-          Abbrechen
-        </button>
-        <button
-          class="dialog__button dialog__button--delete"
-          type="button"
-          (click)="onDeleteClick()"
-        >
-          Löschen
-        </button>
-      </div>
     }
+    <div class="dialog__delete-buttons">
+      <button class="dialog__button dialog__button--cancel" type="button" (click)="onCancelClick()">
+        Abbrechen
+      </button>
+      <button class="dialog__button dialog__button--delete" type="button" (click)="onDeleteClick()">
+        Löschen
+      </button>
+    </div>
   } @else if (type() === 'employee') {
     <h3 class="dialog__title">
       {{ mode() === 'edit' ? 'Mitarbeiter bearbeiten' : 'Mitarbeiter erfassen' }}
@@ -61,14 +39,14 @@
         <mat-label>Name</mat-label>
         <input id="emp-name" matInput placeholder="Z.B. Sarina Muster" formControlName="name" />
         @if (employeeForm.get('name')?.touched && employeeForm.get('name')?.hasError('required')) {
-          <mat-error> Bitte Name eingeben</mat-error>
+          <mat-error>Bitte Name eingeben</mat-error>
         }
       </mat-form-field>
       <mat-form-field class="dialog__field--role dialog__field">
         <mat-label>Rolle</mat-label>
         <input id="role" matInput placeholder="Z.B. Developer" formControlName="role" type="text" />
         @if (employeeForm.get('role')?.touched && employeeForm.get('role')?.hasError('required')) {
-          <mat-error> Bitte Rolle eingeben</mat-error>
+          <mat-error>Bitte Rolle eingeben</mat-error>
         }
       </mat-form-field>
       <mat-form-field class="dialog__field--fe-capacity dialog__field">
@@ -89,7 +67,7 @@
         @if (
           employeeForm.get('capacityFe')?.touched && employeeForm.get('capacityFe')?.hasError('min')
         ) {
-          <mat-error> Die Kapazität darf nicht negativ sein</mat-error>
+          <mat-error>Die Kapazität darf nicht negativ sein</mat-error>
         }
       </mat-form-field>
       <mat-form-field class="dialog__field--be-capacity dialog__field">
@@ -105,12 +83,12 @@
           employeeForm.get('capacityBe')?.touched &&
           employeeForm.get('capacityBe')?.hasError('required')
         ) {
-          <mat-error> Bitte Backend Kapazität eingeben</mat-error>
+          <mat-error>Bitte Backend Kapazität eingeben</mat-error>
         }
         @if (
-          employeeForm.get('capacityFe')?.touched && employeeForm.get('capacityFe')?.hasError('min')
+          employeeForm.get('capacityBe')?.touched && employeeForm.get('capacityBe')?.hasError('min')
         ) {
-          <mat-error> Die Kapazität darf nicht negativ sein</mat-error>
+          <mat-error>Die Kapazität darf nicht negativ sein</mat-error>
         }
       </mat-form-field>
       <button class="dialog__button dialog__button--submit" type="submit">Speichern</button>

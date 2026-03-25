@@ -39,8 +39,8 @@
 
 .feature__element {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 15px 0;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr auto;
+  gap: 15px 20px;
   align-items: start;
   padding: 12px 30px;
   background-color: #eceeef;
@@ -65,16 +65,36 @@
 .feature__value--fe-effort {
   grid-column: 3;
   grid-row: 1;
+  white-space: nowrap;
 }
 
 .feature__value--be-effort {
   grid-column: 4;
   grid-row: 1;
+  white-space: nowrap;
 }
 
 .feature__value--description {
-  grid-column: 1 / -1;
+  grid-column: 1 / 5;
   grid-row: 2;
+}
+
+.feature__edit-button {
+  border: none;
+  background: none;
+}
+
+.feature__edit-button--edit {
+  grid-column: 5;
+  grid-row: 1;
+  width: fit-content;
+  justify-self: end;
+}
+
+.feature__edit-button--delete {
+  grid-column: 5;
+  grid-row: 2;
+  justify-self: end;
 }
 
 .feature__toggle-visibility {

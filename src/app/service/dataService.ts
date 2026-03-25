@@ -88,4 +88,21 @@ export class DataService {
       newFeature,
     );
   }
+
+  updateFeature(
+    piId: number,
+    oldFeatureId: number,
+    newFeature: FeatureResponse,
+  ): Observable<FeatureResponse> {
+    return this.http.put<FeatureResponse>(
+      `${this.baseUrl}/api/pis/${piId}/features/${oldFeatureId}`,
+      newFeature,
+    );
+  }
+
+  deleteFeature(piId: number, deleteFeatureId: number): Observable<FeatureResponse> {
+    return this.http.delete<FeatureResponse>(
+      `${this.baseUrl}/api/pis/${piId}/features/${deleteFeatureId}`,
+    );
+  }
 }

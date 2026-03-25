@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../service/dataService';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FeatureResponse } from '../../../Model/feature-model';
 import { DialogContainer } from '../dialog-container/dialog-container';
 import { FeatureOverview } from '../feature-overview/feature-overview';
+import { FeatureResponse } from '../../../Model/feature-model';
 
 @Component({
   selector: 'app-feature-container',
@@ -79,6 +79,14 @@ export class FeatureContainer implements OnInit {
           case 'create':
             this.addFeature(result);
             break;
+
+          case 'edit':
+            this.updateFeature(event.feature!, result);
+            break;
+
+          case 'delete':
+            this.deleteFeature(event.feature!);
+            break;
         }
       });
   }
@@ -97,6 +105,35 @@ export class FeatureContainer implements OnInit {
       },
       error: (err) => {
         console.error('Fehler beim Erstellen:', err);
+      },
+    });
+  }
+
+  updateFeature(oldFeature: FeatureResponse, newFeature: FeatureResponse) {
+    this.dataService.updateFeature(this.piId, oldFeature.id!, newFeature).subscribe({
+      next: () => {
+        this.getFeatures();
+        this.snackBar.open('Mitarbeiter erfolgreich aktualisiert', 'OK', {
+          duration: 3000,
+        });
+      },
+      error: (err) => {
+        console.error('Fehler beim Aktualisieren:', err);
+      },
+    });
+  }
+
+  deleteFeature(toDeleteFeature: FeatureResponse) {
+    const deleteFeatureId = toDeleteFeature.id;
+    this.dataService.deleteFeature(this.piId, deleteFeatureId!).subscribe({
+      next: () => {
+        this.getFeatures();
+        this.snackBar.open('Feature erfolgreich gelöscht', 'OK', {
+          duration: 3000,
+        });
+      },
+      error: (err) => {
+        console.error('Fehler beim Löschen:', err);
       },
     });
   }

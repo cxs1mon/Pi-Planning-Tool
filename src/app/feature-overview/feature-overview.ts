@@ -25,4 +25,20 @@ export class FeatureOverview {
       type: 'feature',
     });
   }
+
+  openDeleteDialog(feature: FeatureResponse) {
+    this.sendOpenDialog.emit({
+      mode: 'delete',
+      type: 'feature',
+      feature,
+    });
+  }
+
+  openEditDialog(feature: FeatureResponse) {
+    this.sendOpenDialog.emit({
+      mode: 'edit',
+      type: 'feature',
+      feature,
+    });
+  }
 }

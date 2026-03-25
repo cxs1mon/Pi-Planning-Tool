@@ -40,6 +40,30 @@
           <p class="feature__value feature__value--fe-effort">FE Aufwand: {{ feature.feEffort }}</p>
 
           <p class="feature__value feature__value--be-effort">BE Aufwand: {{ feature.beEffort }}</p>
+          <button
+            class="feature__edit-button feature__edit-button--edit"
+            (click)="openEditDialog(feature)"
+          >
+            <img
+              ngSrc="./edit_angular_icon.png"
+              alt="Edit feature Icon"
+              height="24"
+              width="24"
+              priority
+            />
+          </button>
+          <button
+            class="feature__edit-button feature__edit-button--delete"
+            (click)="openDeleteDialog(feature)"
+          >
+            <img
+              ngSrc="./delete_angular_icon.png"
+              alt="Delete feature Icon"
+              height="24"
+              width="24"
+              priority
+            />
+          </button>
         </div>
       }
 
