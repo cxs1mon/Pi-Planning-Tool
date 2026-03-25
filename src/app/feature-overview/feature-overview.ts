@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { FeatureResponse } from '../../../Model/feature-model';
 import { NgOptimizedImage } from '@angular/common';
 
@@ -9,11 +9,15 @@ import { NgOptimizedImage } from '@angular/common';
   styleUrl: './feature-overview.scss',
 })
 export class FeatureOverview {
+  featureList = input<FeatureResponse[]>([]);
+
   sendOpenDialog = output<{
     mode: 'create' | 'edit' | 'delete';
     type: 'feature';
     feature?: FeatureResponse;
   }>();
+
+  $showAll = signal(false);
 
   openCreateDialog() {
     this.sendOpenDialog.emit({

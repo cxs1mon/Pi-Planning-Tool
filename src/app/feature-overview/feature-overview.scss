@@ -1,4 +1,4 @@
-.features {
+.feature {
   padding: 16px 0;
   max-width: 1200px;
   margin: 0 auto;
@@ -7,21 +7,80 @@
   align-items: center;
 }
 
-.features__title {
+.feature__title {
   color: #23366f;
 }
 
-.features__add-button {
+.feature__add-button {
   border: none;
   background: none;
   justify-self: end;
 }
 
-.features__add-icon {
+.feature__add-icon {
   background-color: #5495cf;
   padding: 5px;
   border-radius: 8px;
   width: 20px;
   height: auto;
   justify-self: end;
+}
+
+.feature__notice {
+  margin: 10px auto;
+  grid-column: 1 / -1;
+}
+
+.feature__list {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / -1;
+}
+
+.feature__element {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 15px 0;
+  align-items: start;
+  padding: 12px 30px;
+  background-color: #eceeef;
+  border-radius: 20px;
+  margin: 5px 0;
+}
+
+.feature__value {
+  margin: 0;
+}
+
+.feature__value--number {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.feature__value--title {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.feature__value--fe-effort {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.feature__value--be-effort {
+  grid-column: 4;
+  grid-row: 1;
+}
+
+.feature__value--description {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.feature__toggle-visibility {
+  border: none;
+  background: none;
+  font-size: 16px;
+  margin: 10px auto;
+  grid-column: 1 / -1;
 }

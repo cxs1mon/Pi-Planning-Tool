@@ -79,6 +79,9 @@ export class DataService {
 
   // Features
 
+  getFeatures(piId: number): Observable<FeatureResponse[]> {
+    return this.http.get<FeatureResponse[]>(`${this.baseUrl}/api/pis/${piId}/features`);
+  }
   createFeature(newFeature: FeatureResponse): Observable<FeatureResponse> {
     return this.http.post<FeatureResponse>(
       `${this.baseUrl}/api/pis/${newFeature.id}/features`,

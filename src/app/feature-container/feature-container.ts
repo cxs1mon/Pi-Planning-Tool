@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../service/dataService';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,6 +19,8 @@ export class FeatureContainer implements OnInit {
   private piId = 0;
   dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+
+  public $allFeatures: WritableSignal<FeatureResponse[]> = signal<FeatureResponse[]>([]);
 
   ngOnInit(): void {
     this.getPathId();
@@ -42,6 +44,18 @@ export class FeatureContainer implements OnInit {
       }
 
       this.piId = id;
+      this.getFeatures();
+    });
+  }
+
+  getFeatures() {
+    this.dataService.getFeatures(this.piId).subscribe({
+      next: (res: FeatureResponse[]) => {
+        this.$allFeatures.set(res);
+      },
+      error: (err) => {
+        console.error('Fehler beim Abfragen:', err);
+      },
     });
   }
 
@@ -76,6 +90,7 @@ export class FeatureContainer implements OnInit {
     };
     this.dataService.createFeature(featureWithId).subscribe({
       next: () => {
+        this.getFeatures();
         this.snackBar.open('Feature erfolgreich erstellt', 'OK', {
           duration: 3000,
         });
