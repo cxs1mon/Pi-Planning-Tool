@@ -25,24 +25,24 @@ import { NgOptimizedImage } from '@angular/common';
   styleUrl: './dialog-overview.scss',
 })
 export class DialogOverview {
-  mode = input<string>('create');
-  type = input<string>('employee');
+  mode = input<'create' | 'edit' | 'delete'>('create');
+  type = input<'employee' | 'feature' | 'pi'>('employee');
   employee = input<EmployeeResponse>();
-  sendCreateClick = output<EmployeeResponse | undefined>();
+  sendSaveClick = output<EmployeeResponse>();
   sendDeleteClick = output<void>();
   sendCancelClick = output<void>();
 
   employeeForm = new FormGroup({
-    name: new FormControl<string>(this.employee()?.name ?? '', {
+    name: new FormControl<string>('', {
       validators: [Validators.required],
     }),
-    role: new FormControl<string>(this.employee()?.role ?? '', {
+    role: new FormControl<string>('', {
       validators: [Validators.required],
     }),
-    capacityFe: new FormControl<number>(this.employee()?.feCapacity ?? 0, {
+    capacityFe: new FormControl<number>(0, {
       validators: [Validators.required, Validators.min(0)],
     }),
-    capacityBe: new FormControl<number>(this.employee()?.beCapacity ?? 0, {
+    capacityBe: new FormControl<number>(0, {
       validators: [Validators.required, Validators.min(0)],
     }),
   });
@@ -72,7 +72,7 @@ export class DialogOverview {
         feCapacity: this.employeeForm.controls.capacityFe.value ?? 0,
         beCapacity: this.employeeForm.controls.capacityBe.value ?? 0,
       };
-      this.sendCreateClick.emit(newEmployee);
+      this.sendSaveClick.emit(newEmployee);
     } else {
       console.warn('Fehlerhafte eingabe');
     }

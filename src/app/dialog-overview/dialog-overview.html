@@ -32,6 +32,25 @@
       </div>
     } @else if (type() === 'feature') {
       <h3 class="dialog__title">Feature löschen</h3>
+    } @else{
+      <h3 class="dialog__title">PI löschen</h3>
+      <p class="dialog__delete-hint">Möchten Sie dieses PI wirklich löschen?</p>
+      <div class="dialog__delete-buttons">
+        <button
+          class="dialog__button dialog__button--cancel"
+          type="button"
+          (click)="onCancelClick()"
+        >
+          Abbrechen
+        </button>
+        <button
+          class="dialog__button dialog__button--delete"
+          type="button"
+          (click)="onDeleteClick()"
+        >
+          Löschen
+        </button>
+      </div>
     }
   } @else if (type() === 'employee') {
     <h3 class="dialog__title">

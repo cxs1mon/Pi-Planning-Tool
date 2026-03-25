@@ -3,6 +3,8 @@ import { SettingsOverview } from '../settings-overview/settings-overview';
 import { PiResponse } from '../../../Model/pi-model';
 import { DataService } from '../service/dataService';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DialogContainer } from '../dialog-container/dialog-container';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-settings-container',
@@ -14,6 +16,7 @@ export class SettingsContainer implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private dataService = inject(DataService);
+  dialog = inject(MatDialog);
 
   public piId = 0;
 
@@ -38,6 +41,20 @@ export class SettingsContainer implements OnInit {
       this.piId = id;
       this.getOnePi(id);
     });
+  }
+
+  openDialog(event: { mode: 'delete'; type: 'pi'; pi?: PiResponse }) {
+    this.dialog
+      .open(DialogContainer, {
+        data: event,
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) {
+          return;
+        }
+        this.deleteOnePi();
+      });
   }
 
   getOnePi(id: number): void {

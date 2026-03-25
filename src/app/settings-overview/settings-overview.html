@@ -1,8 +1,9 @@
 <section class="settings">
+  <h2 class="dialog__title">PI Einstellungen</h2>
   <form class="edit-pi" (ngSubmit)="updateForm()" [formGroup]="piForm">
     <mat-form-field class="edit-pi__field--name edit-pi__field">
       <mat-label>PI Name</mat-label>
-      <input id="pi-name" matInput placeholder="Z.B. PI 2026 Q1" formControlName="name" />
+      <input id="pi-name" matInput placeholder="Z.B. PI 2026 Q1" formControlName="name"/>
       @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('required')) {
         <mat-error> Bitte Name eingeben</mat-error>
       }
@@ -40,15 +41,13 @@
       <button
         type="button"
         class="edit-pi__button--delete edit-pi__button"
-        [class.clicked]="clickedDelete"
-        (click)="deletePi()"
+        (click)="openDeleteDialog()"
       >
         PI Löschen
       </button>
       <button
         type="submit"
         class="edit-pi__button--submit edit-pi__button"
-        [class.clicked]="clickedUpdate"
       >
         Speichern
       </button>

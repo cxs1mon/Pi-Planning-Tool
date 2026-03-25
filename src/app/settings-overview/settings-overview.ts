@@ -20,22 +20,27 @@ import { toObservable } from '@angular/core/rxjs-interop';
 })
 export class SettingsOverview {
   currentPi = input<PiResponse>();
-  sendNewPi = output<PiResponse>();
-  sendDeletion = output<void>();
 
-  clickedUpdate = false;
-  clickedDelete = false;
+  sendNewPi = output<PiResponse>();
+  sendOpenDialog = output<{
+    mode: 'delete';
+    type: 'pi';
+    pi?: PiResponse;
+  }>();
 
   piForm = new FormGroup(
     {
       name: new FormControl<string>('', {
         validators: [Validators.required],
+        nonNullable: true,
       }),
       startDate: new FormControl<string>('', {
         validators: [Validators.required],
+        nonNullable: true,
       }),
       endDate: new FormControl<string>('', {
         validators: [Validators.required],
+        nonNullable: true,
       }),
     },
     { validators: this.dateValidator },
@@ -44,12 +49,36 @@ export class SettingsOverview {
   constructor() {
     toObservable(this.currentPi).subscribe((pi) => {
       if (!pi) return;
+
       this.piForm.patchValue({
-        name: pi.name,
-        startDate: pi.startDate,
-        endDate: pi.endDate,
+        name: pi.name ?? '',
+        startDate: pi.startDate ?? '',
+        endDate: pi.endDate ?? '',
       });
-      this.piForm.markAllAsTouched();
+    });
+  }
+
+  updateForm(): void {
+    this.piForm.markAllAsTouched();
+
+    if (this.piForm.invalid) {
+      return;
+    }
+
+    const newPi: PiResponse = {
+      name: this.piForm.controls.name.value,
+      startDate: this.piForm.controls.startDate.value,
+      endDate: this.piForm.controls.endDate.value,
+    };
+
+    this.sendNewPi.emit(newPi);
+  }
+
+  openDeleteDialog(): void {
+    this.sendOpenDialog.emit({
+      mode: 'delete',
+      type: 'pi',
+      pi: this.currentPi(),
     });
   }
 
@@ -57,34 +86,12 @@ export class SettingsOverview {
     const start = control.get('startDate')?.value;
     const end = control.get('endDate')?.value;
 
-    if (!start || !end) return null; // andere Validatoren übernehmen required
+    if (!start || !end) return null;
 
     if (new Date(end) <= new Date(start)) {
       return { dateRangeInvalid: true };
     }
+
     return null;
-  }
-
-  deletePi() {
-    this.clickedDelete = true;
-
-    this.sendDeletion.emit();
-  }
-
-  updateForm(): void {
-    this.piForm.markAllAsTouched();
-    if (this.piForm.valid) {
-      const newPi: PiResponse = {
-        name: this.piForm.controls.name.value ?? '', // ?? ersetzt das linke mit dem rechte wenn es null oder undefined ist
-        startDate: this.piForm.controls.startDate.value ?? '',
-        endDate: this.piForm.controls.endDate.value ?? '',
-      };
-
-      this.clickedUpdate = true;
-      this.sendNewPi.emit(newPi);
-    } else {
-      console.warn('Bitte alle Felder ausfüllen');
-      return;
-    }
   }
 }
