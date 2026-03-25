@@ -29,13 +29,22 @@ export class DialogOverview {
   type = input<string>('employee');
   employee = input<EmployeeResponse>();
   sendCreateClick = output<EmployeeResponse | undefined>();
+  sendDeleteClick = output<void>();
   sendCancelClick = output<void>();
 
   employeeForm = new FormGroup({
-    name: new FormControl<string>('', { validators: [Validators.required] }),
-    role: new FormControl<string>('', { validators: [Validators.required] }),
-    capacityFe: new FormControl<number>(0, { validators: [Validators.required] }),
-    capacityBe: new FormControl<number>(0, { validators: [Validators.required] }),
+    name: new FormControl<string>(this.employee()?.name ?? '', {
+      validators: [Validators.required],
+    }),
+    role: new FormControl<string>(this.employee()?.role ?? '', {
+      validators: [Validators.required],
+    }),
+    capacityFe: new FormControl<number>(this.employee()?.feCapacity ?? 0, {
+      validators: [Validators.required, Validators.min(0)],
+    }),
+    capacityBe: new FormControl<number>(this.employee()?.beCapacity ?? 0, {
+      validators: [Validators.required, Validators.min(0)],
+    }),
   });
 
   constructor() {
@@ -67,6 +76,10 @@ export class DialogOverview {
     } else {
       console.warn('Fehlerhafte eingabe');
     }
+  }
+
+  onDeleteClick(): void {
+    this.sendDeleteClick.emit();
   }
 
   onCancelClick(): void {

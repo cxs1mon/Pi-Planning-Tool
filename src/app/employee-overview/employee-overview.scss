@@ -45,6 +45,12 @@
   background-color: #eceeef;
   border-radius: 20px;
   margin: 5px 0;
+  align-items: center;
+}
+
+.employees__edit-button {
+  border: none;
+  background: none;
 }
 
 .employees__toggle-visibility {

@@ -57,15 +57,34 @@ export class EmployeeContainer implements OnInit {
     });
   }
 
-  openCreateDialog() {
+  openDialog(event: {
+    mode: 'create' | 'edit' | 'delete';
+    type: 'employee';
+    employee?: EmployeeResponse;
+  }) {
     this.dialog
       .open(DialogContainer, {
-        data: { mode: 'create', type: 'employee' },
+        data: event,
       })
       .afterClosed()
       .subscribe((result) => {
-        if (result) {
-          this.addEmployee(result);
+        // result, was beim schliessen vom Dialog zurückkommt
+        if (!result) {
+          return;
+        }
+
+        switch (event.mode) {
+          case 'create':
+            this.addEmployee(result);
+            break;
+
+          case 'edit':
+            this.updateEmployee(event.employee!, result);
+            break;
+
+          case 'delete':
+            this.deleteEmployee(event.employee!);
+            break;
         }
       });
   }
@@ -81,6 +100,29 @@ export class EmployeeContainer implements OnInit {
       },
       error: (err) => {
         console.error('Fehler beim Erstellen:', err);
+      },
+    });
+  }
+
+  updateEmployee(oldEmployee: EmployeeResponse, newEmployee: EmployeeResponse) {
+    this.dataService.updateEmployee(this.piId, oldEmployee.id!, newEmployee).subscribe({
+      next: () => {
+        this.getEmployees();
+      },
+      error: (err) => {
+        console.error('Fehler beim Aktualisieren:', err);
+      },
+    });
+  }
+
+  deleteEmployee(toDeleteEmployee: EmployeeResponse) {
+    const deleteEmployeeId = toDeleteEmployee.id;
+    this.dataService.deleteEmployee(this.piId, deleteEmployeeId!).subscribe({
+      next: () => {
+        this.getEmployees();
+      },
+      error: (err) => {
+        console.error('Fehler beim Löschen:', err);
       },
     });
   }

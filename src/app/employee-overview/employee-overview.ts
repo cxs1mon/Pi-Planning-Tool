@@ -10,11 +10,34 @@ import { NgOptimizedImage } from '@angular/common';
 })
 export class EmployeeOverview {
   employeeList = input<EmployeeResponse[]>([]);
-  sendOpenCreateDialog = output();
+  sendOpenDialog = output<{
+    mode: 'create' | 'edit' | 'delete';
+    type: 'employee';
+    employee?: EmployeeResponse;
+  }>();
 
   $showAll = signal(false);
 
-  openDialog() {
-    this.sendOpenCreateDialog.emit();
+  openCreateDialog() {
+    this.sendOpenDialog.emit({
+      mode: 'create',
+      type: 'employee',
+    });
+  }
+
+  openDeleteDialog(employee: EmployeeResponse) {
+    this.sendOpenDialog.emit({
+      mode: 'delete',
+      type: 'employee',
+      employee,
+    });
+  }
+
+  openEditDialog(employee: EmployeeResponse) {
+    this.sendOpenDialog.emit({
+      mode: 'edit',
+      type: 'employee',
+      employee,
+    });
   }
 }

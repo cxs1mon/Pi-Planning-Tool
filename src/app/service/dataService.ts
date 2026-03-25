@@ -58,4 +58,21 @@ export class DataService {
       newEmployee,
     );
   }
+
+  updateEmployee(
+    piId: number,
+    oldEmployeeId: number,
+    newEmployee: EmployeeResponse,
+  ): Observable<EmployeeResponse> {
+    return this.http.put<EmployeeResponse>(
+      `${this.baseUrl}/api/pis/${piId}/employees/${oldEmployeeId}`,
+      newEmployee,
+    );
+  }
+
+  deleteEmployee(piId: number, deleteEmployeeId: number): Observable<EmployeeResponse> {
+    return this.http.delete<EmployeeResponse>(
+      `${this.baseUrl}/api/pis/${piId}/employees/${deleteEmployeeId}`,
+    );
+  }
 }

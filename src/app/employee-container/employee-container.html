@@ -1,4 +1,1 @@
-<app-employee-overview
-  [employeeList]="$allEmployees()"
-  (sendOpenCreateDialog)="openCreateDialog()"
-/>
+<app-employee-overview [employeeList]="$allEmployees()" (sendOpenDialog)="openDialog($event)" />

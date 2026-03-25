@@ -4,7 +4,7 @@
   padding: 16px 0;
 }
 
-.dialog__cancel-btn {
+.dialog__cancel-x-btn {
   border: none;
   background: none;
   width: fit-content;
@@ -19,18 +19,50 @@
 }
 
 .dialog__form {
+  column-gap: 15px;
   padding: 0 32px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-.dialog__button--submit {
+.dialog__field--name,
+.dialog__field--role {
+  grid-column: span 2;
+}
+
+.dialog__delete-hint {
+  margin-top: 0;
+  padding: 0 32px;
+}
+
+.dialog__delete-buttons {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+.dialog__button--submit,
+.dialog__button--cancel {
   padding: 10px;
   border-radius: 25px;
   border: none;
-  width: 100%;
   color: white;
+  width: 48%;
   background: #5495cf;
+}
+
+.dialog__button--submit {
+  grid-column: span 2;
+  justify-self: end;
+}
+
+.dialog__button--delete {
+  padding: 10px;
+  border-radius: 25px;
+  border: none;
+  width: 48%;
+  color: white;
+  background: #ff7569;
 }

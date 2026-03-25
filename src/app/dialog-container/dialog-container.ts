@@ -20,4 +20,8 @@ export class DialogContainer {
   onCancel(): void {
     this.dialogRef.close();
   }
+
+  onDelete(): void {
+    this.dialogRef.close(true); // true, damit nicht das result = undefined ist, was abbrechen heisst
+  }
 }
