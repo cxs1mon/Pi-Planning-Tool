@@ -1,0 +1,17 @@
+<section class="features">
+  <h2 class="features__title">Featureübersicht</h2>
+  <button
+    class="features__add-button"
+    (click)="openCreateDialog()"
+    (keydown.esc)="openCreateDialog()"
+  >
+    <img
+      ngSrc="./add_angular_icon.png"
+      alt="Add feature Icon"
+      height="24"
+      width="24"
+      class="features__add-icon"
+      priority
+    />
+  </button>
+</section>

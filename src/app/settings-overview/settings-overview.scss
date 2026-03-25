@@ -35,13 +35,11 @@
 .edit-pi__submit.clicked {
   animation: shimmer 0.6s linear 1 forwards;
   background: linear-gradient(
-      to right,
-      // Colors picked from AI based on base color #5495cf
-      #4a86ba 5%,
-      /* dunkler */
-      #6fa8dc 25%,
-      /* heller (Shimmer) */
-      #4a86ba 35%
+    to right,
+    // Colors picked from AI based on base color #5495cf
+    #4a86ba 5%,
+    /* dunkler */ #6fa8dc 25%,
+    /* heller (Shimmer) */ #4a86ba 35%
   );
   background-size: 300px 100%;
 }
@@ -49,13 +47,11 @@
 .edit-pi__delete.clicked {
   animation: shimmer 0.6s linear 1 forwards;
   background: linear-gradient(
-      to right,
-      // Colors picked from AI based on base color #5495cf
-      #4a86ba 5%,
-      /* dunkler */
-      #6fa8dc 25%,
-      /* heller (Shimmer) */
-      #4a86ba 35%
+    to right,
+    // Colors picked from AI based on base color #5495cf
+    #4a86ba 5%,
+    /* dunkler */ #6fa8dc 25%,
+    /* heller (Shimmer) */ #4a86ba 35%
   );
   background-size: 300px 100%;
 }

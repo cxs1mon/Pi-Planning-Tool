@@ -20,6 +20,7 @@
 
 .dialog__form {
   column-gap: 15px;
+  row-gap: 15px;
   padding: 0 32px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -27,6 +28,12 @@
 
 .dialog__field--name,
 .dialog__field--role {
+  grid-column: span 2;
+}
+
+.dialog__field--feature-number,
+.dialog__field--title,
+.dialog__field--description {
   grid-column: span 2;
 }
 
@@ -65,4 +72,11 @@
   width: 48%;
   color: white;
   background: #ff7569;
+}
+
+.dialog__form-error {
+  grid-column: span 2;
+  color: #ba1a1a;
+  font-size: 14px;
+  margin-top: -8px;
 }

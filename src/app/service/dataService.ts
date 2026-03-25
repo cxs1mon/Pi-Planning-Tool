@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PiResponse } from '../../../Model/pi-model';
 import { HealthResponse } from '../../../Model/health-model';
 import { EmployeeResponse } from '../../../Model/employee-model';
+import { FeatureResponse } from '../../../Model/feature-model';
 
 @Injectable({
   providedIn: 'root',
@@ -73,6 +74,15 @@ export class DataService {
   deleteEmployee(piId: number, deleteEmployeeId: number): Observable<EmployeeResponse> {
     return this.http.delete<EmployeeResponse>(
       `${this.baseUrl}/api/pis/${piId}/employees/${deleteEmployeeId}`,
+    );
+  }
+
+  // Features
+
+  createFeature(newFeature: FeatureResponse): Observable<FeatureResponse> {
+    return this.http.post<FeatureResponse>(
+      `${this.baseUrl}/api/pis/${newFeature.id}/features`,
+      newFeature,
     );
   }
 }

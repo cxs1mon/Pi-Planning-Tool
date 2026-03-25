@@ -1,0 +1,27 @@
+.features {
+  padding: 16px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.features__title {
+  color: #23366f;
+}
+
+.features__add-button {
+  border: none;
+  background: none;
+  justify-self: end;
+}
+
+.features__add-icon {
+  background-color: #5495cf;
+  padding: 5px;
+  border-radius: 8px;
+  width: 20px;
+  height: auto;
+  justify-self: end;
+}

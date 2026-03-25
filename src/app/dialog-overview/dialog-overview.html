@@ -32,7 +32,7 @@
       </div>
     } @else if (type() === 'feature') {
       <h3 class="dialog__title">Feature löschen</h3>
-    } @else{
+    } @else {
       <h3 class="dialog__title">PI löschen</h3>
       <p class="dialog__delete-hint">Möchten Sie dieses PI wirklich löschen?</p>
       <div class="dialog__delete-buttons">
@@ -116,6 +116,102 @@
       <button class="dialog__button dialog__button--submit" type="submit">Speichern</button>
     </form>
   } @else {
-    <!-- Feature -->
+    <h3 class="dialog__title">
+      {{ mode() === 'edit' ? 'Feature bearbeiten' : 'Feature erfassen' }}
+    </h3>
+    <form (ngSubmit)="onSaveClick()" [formGroup]="featureForm" class="dialog__form">
+      <mat-form-field class="dialog__field--feature-number dialog__field">
+        <mat-label>Feature Nummer</mat-label>
+        <input
+          id="feature-number"
+          matInput
+          placeholder="Z.B. FEAT-01"
+          formControlName="featureNumber"
+        />
+        @if (
+          featureForm.get('featureNumber')?.touched &&
+          featureForm.get('featureNumber')?.hasError('required')
+        ) {
+          <mat-error>Bitte Feature Nummer eingeben</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="dialog__field--title dialog__field">
+        <mat-label>Titel</mat-label>
+        <input
+          id="feature-title"
+          matInput
+          placeholder="Z.B. Karte anzeigen"
+          formControlName="title"
+          type="text"
+        />
+        @if (featureForm.get('title')?.touched && featureForm.get('title')?.hasError('required')) {
+          <mat-error>Bitte Titel eingeben</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="dialog__field--description dialog__field">
+        <mat-label>Beschreibung</mat-label>
+        <textarea
+          id="feature-description"
+          matInput
+          placeholder="Z.B. Anzeige der Kundendaten auf der Detailansicht"
+          formControlName="description"
+        ></textarea>
+        @if (
+          featureForm.get('description')?.touched &&
+          featureForm.get('description')?.hasError('required')
+        ) {
+          <mat-error>Bitte Beschreibung eingeben</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="dialog__field--fe-effort dialog__field">
+        <mat-label>Frontend Aufwand</mat-label>
+        <input
+          id="fe-effort"
+          matInput
+          placeholder="Z.B. 21"
+          formControlName="effortFe"
+          type="number"
+        />
+        @if (
+          featureForm.get('effortFe')?.touched && featureForm.get('effortFe')?.hasError('required')
+        ) {
+          <mat-error>Bitte Frontend Aufwand eingeben</mat-error>
+        }
+        @if (featureForm.get('effortFe')?.touched && featureForm.get('effortFe')?.hasError('min')) {
+          <mat-error>Der Aufwand darf nicht negativ sein</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="dialog__field--be-effort dialog__field">
+        <mat-label>Backend Aufwand</mat-label>
+        <input
+          id="be-effort"
+          matInput
+          placeholder="Z.B. 6"
+          formControlName="effortBe"
+          type="number"
+        />
+        @if (
+          featureForm.get('effortBe')?.touched && featureForm.get('effortBe')?.hasError('required')
+        ) {
+          <mat-error>Bitte Backend Aufwand eingeben</mat-error>
+        }
+        @if (featureForm.get('effortBe')?.touched && featureForm.get('effortBe')?.hasError('min')) {
+          <mat-error>Der Aufwand darf nicht negativ sein</mat-error>
+        }
+      </mat-form-field>
+      @if (
+        featureForm.hasError('noEffort') &&
+        featureForm.get('effortFe')?.valid &&
+        featureForm.get('effortBe')?.valid &&
+        (featureForm.get('effortFe')?.touched || featureForm.get('effortBe')?.touched)
+      ) {
+        <div class="dialog__form-error">Mindestens FE oder BE Aufwand muss grösser als 0 sein</div>
+      }
+      <button class="dialog__button dialog__button--submit" type="submit">Speichern</button>
+    </form>
   }
 </section>
