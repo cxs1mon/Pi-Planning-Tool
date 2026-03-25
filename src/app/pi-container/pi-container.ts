@@ -3,6 +3,7 @@ import { DataService } from '../service/dataService';
 import { PiOverview } from '../pi-overview/pi-overview';
 import { PiResponse } from '../../../Model/pi-model';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-pi-container',
   imports: [PiOverview],
@@ -13,6 +14,7 @@ export class PiContainer implements OnInit {
   piList: PiResponse[] = [];
   router = inject(Router);
   private dataService = inject(DataService);
+  private snackBar = inject(MatSnackBar);
 
   createNewPi(piData: PiResponse): void {
     this.dataService.createPi(piData).subscribe({
@@ -21,6 +23,9 @@ export class PiContainer implements OnInit {
         setTimeout(() => {
           this.navigate(createdPi.id!);
         }, 400);
+        this.snackBar.open('PI erfolgreich erstellt', 'OK', {
+          duration: 3000,
+        });
       },
       error: (err) => {
         console.error('Fehler beim Erstellen:', err);

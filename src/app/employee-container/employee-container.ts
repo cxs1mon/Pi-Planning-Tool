@@ -5,6 +5,7 @@ import { DataService } from '../service/dataService';
 import { EmployeeResponse } from '../../../Model/employee-model';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogContainer } from '../dialog-container/dialog-container';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-employee-container',
@@ -17,6 +18,7 @@ export class EmployeeContainer implements OnInit {
   private dataService = inject(DataService);
   private piId = 0;
   dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
   public $allEmployees: WritableSignal<EmployeeResponse[]> = signal<EmployeeResponse[]>([]);
 
@@ -97,6 +99,9 @@ export class EmployeeContainer implements OnInit {
     this.dataService.createEmployee(employeeWithId).subscribe({
       next: () => {
         this.getEmployees();
+        this.snackBar.open('Mitarbeiter erfolgreich erstellt', 'OK', {
+          duration: 3000,
+        });
       },
       error: (err) => {
         console.error('Fehler beim Erstellen:', err);
@@ -108,6 +113,9 @@ export class EmployeeContainer implements OnInit {
     this.dataService.updateEmployee(this.piId, oldEmployee.id!, newEmployee).subscribe({
       next: () => {
         this.getEmployees();
+        this.snackBar.open('Mitarbeiter erfolgreich aktualisiert', 'OK', {
+          duration: 3000,
+        });
       },
       error: (err) => {
         console.error('Fehler beim Aktualisieren:', err);
@@ -120,6 +128,9 @@ export class EmployeeContainer implements OnInit {
     this.dataService.deleteEmployee(this.piId, deleteEmployeeId!).subscribe({
       next: () => {
         this.getEmployees();
+        this.snackBar.open('Mitarbeiter erfolgreich gelöscht', 'OK', {
+          duration: 3000,
+        });
       },
       error: (err) => {
         console.error('Fehler beim Löschen:', err);
