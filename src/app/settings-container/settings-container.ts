@@ -5,6 +5,7 @@ import { DataService } from '../service/dataService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogContainer } from '../dialog-container/dialog-container';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-settings-container',
@@ -16,6 +17,7 @@ export class SettingsContainer implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private dataService = inject(DataService);
+  private snackBar = inject(MatSnackBar);
   dialog = inject(MatDialog);
 
   public piId = 0;
@@ -77,6 +79,9 @@ export class SettingsContainer implements OnInit {
     this.dataService.updatePi(updatedPi).subscribe({
       next: (res: PiResponse) => {
         this.currentPi = res;
+        this.snackBar.open('PI erfolgreich gelöscht', 'OK', {
+          duration: 3000,
+        });
         this.navigate(1);
       },
       error: (err) => {
@@ -88,6 +93,9 @@ export class SettingsContainer implements OnInit {
   deleteOnePi(): void {
     this.dataService.deletePi(this.piId).subscribe({
       next: () => {
+        this.snackBar.open('Mitarbeiter erfolgreich erstellt', 'OK', {
+          duration: 3000,
+        });
         this.navigate(0);
       },
       error: (err) => {
