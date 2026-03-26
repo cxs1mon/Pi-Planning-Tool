@@ -11,15 +11,25 @@ import {
 } from '@angular/forms';
 import { MatError, MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-settings-overview',
-  imports: [FormsModule, MatError, MatFormField, MatInput, MatLabel, ReactiveFormsModule],
+  imports: [
+    FormsModule,
+    MatError,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    ReactiveFormsModule,
+    NgxSkeletonLoaderComponent,
+  ],
   templateUrl: './settings-overview.html',
   styleUrl: './settings-overview.scss',
 })
 export class SettingsOverview {
   currentPi = input<PiResponse | null>(null);
+  loading = input<boolean>(true);
 
   sendNewPi = output<PiResponse>();
   sendOpenDialog = output<{

@@ -20,6 +20,8 @@ export class EmployeeContainer implements OnInit {
   dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
 
+  $loading = signal(true);
+
   public $allEmployees: WritableSignal<EmployeeResponse[]> = signal<EmployeeResponse[]>([]);
 
   ngOnInit(): void {
@@ -67,9 +69,11 @@ export class EmployeeContainer implements OnInit {
   getEmployees() {
     this.dataService.getEmployees(this.piId).subscribe({
       next: (res: EmployeeResponse[]) => {
+        this.$loading.set(false);
         this.$allEmployees.set(res);
       },
       error: (err) => {
+        this.$loading.set(false);
         console.error('Fehler beim Abfragen:', err);
         this.dialog.open(DialogContainer, {
           data: {

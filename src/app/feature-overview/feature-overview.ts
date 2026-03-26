@@ -1,15 +1,17 @@
 import { Component, input, output, signal } from '@angular/core';
 import { FeatureResponse } from '../../../Model/feature-model';
 import { NgOptimizedImage } from '@angular/common';
+import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-feature-overview',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, NgxSkeletonLoaderComponent],
   templateUrl: './feature-overview.html',
   styleUrl: './feature-overview.scss',
 })
 export class FeatureOverview {
   featureList = input<FeatureResponse[]>([]);
+  loading = input<boolean>(true);
 
   sendOpenDialog = output<{
     mode: 'create' | 'edit' | 'delete';

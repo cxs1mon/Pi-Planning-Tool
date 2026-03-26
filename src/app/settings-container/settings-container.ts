@@ -23,6 +23,7 @@ export class SettingsContainer implements OnInit {
   public piId = 0;
 
   $currentPi = signal<PiResponse | null>(null);
+  $loading = signal(true);
 
   ngOnInit(): void {
     this.getPathId();
@@ -48,6 +49,7 @@ export class SettingsContainer implements OnInit {
 
       this.dataService.getOnePi(this.piId).subscribe({
         next: (pi) => {
+          this.$loading.set(false);
           this.$currentPi.set(pi);
           this.dataService.setPi(pi);
         },
@@ -60,6 +62,7 @@ export class SettingsContainer implements OnInit {
             },
             disableClose: true,
           });
+          this.$loading.set(false);
         },
       });
     });

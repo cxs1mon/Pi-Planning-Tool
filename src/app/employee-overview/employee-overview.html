@@ -1,72 +1,108 @@
 <section class="employees">
   <h2 class="employees__title">Mitarbieterübersicht</h2>
-  <button
-    class="employees__add-button"
-    (click)="openCreateDialog()"
-    (keydown.esc)="openCreateDialog()"
-  >
-    <img
-      ngSrc="./add_angular_icon.png"
-      alt="Add employee Icon"
-      height="24"
-      width="24"
-      class="employees__add-icon"
-      priority
-    />
-  </button>
-  <article class="employees__list">
-    @if (employeeList().length <= 0) {
-      <p class="employee__notice">Keine Mitarbeiter erfasst</p>
-    } @else {
-      @for (
-        employee of $showAll()
-          ? employeeList().slice().reverse()
-          : employeeList().slice().reverse().slice(0, 4);
-        track employee.id
-      ) {
-        <div class="employees__element">
-          <p class="employees__value employees__value--name">{{ employee.name }}</p>
-          <p class="employees__value employees__value--role">{{ employee.role }}</p>
-          <p class="employees__value employees__value--fe-capacity">
-            FE Kapazität: {{ employee.feCapacity }}
-          </p>
-          <p class="employees__value employees__value--be-capacity">
-            BE Kapazität: {{ employee.beCapacity }}
-          </p>
-          <div>
-            <button
-              class="employees__edit-button employees__edit-button--edit"
-              (click)="openEditDialog(employee)"
-            >
-              <img
-                ngSrc="./edit_angular_icon.png"
-                alt="Edit employee Icon"
-                height="24"
-                width="24"
-                priority
-              />
-            </button>
-            <button
-              class="employees__edit-button employees__edit-button--delete"
-              (click)="openDeleteDialog(employee)"
-            >
-              <img
-                ngSrc="./delete_angular_icon.png"
-                alt="Delete employee Icon"
-                height="24"
-                width="24"
-                priority
-              />
-            </button>
+  @if (!loading()) {
+    <button
+      class="employees__add-button"
+      (click)="openCreateDialog()"
+      (keydown.esc)="openCreateDialog()"
+    >
+      <img
+        ngSrc="./add_angular_icon.png"
+        alt="Add employee Icon"
+        height="24"
+        width="24"
+        class="employees__add-icon"
+        priority
+      />
+    </button>
+    <article class="employees__list">
+      @if (employeeList().length <= 0) {
+        <p class="employee__notice">Keine Mitarbeiter erfasst</p>
+      } @else {
+        @for (
+          employee of $showAll()
+            ? employeeList().slice().reverse()
+            : employeeList().slice().reverse().slice(0, 4);
+          track employee.id
+        ) {
+          <div class="employees__element">
+            <p class="employees__value employees__value--name">{{ employee.name }}</p>
+            <p class="employees__value employees__value--role">{{ employee.role }}</p>
+            <p class="employees__value employees__value--fe-capacity">
+              FE Kapazität: {{ employee.feCapacity }}
+            </p>
+            <p class="employees__value employees__value--be-capacity">
+              BE Kapazität: {{ employee.beCapacity }}
+            </p>
+            <div>
+              <button
+                class="employees__edit-button employees__edit-button--edit"
+                (click)="openEditDialog(employee)"
+              >
+                <img
+                  ngSrc="./edit_angular_icon.png"
+                  alt="Edit employee Icon"
+                  height="24"
+                  width="24"
+                  priority
+                />
+              </button>
+              <button
+                class="employees__edit-button employees__edit-button--delete"
+                (click)="openDeleteDialog(employee)"
+              >
+                <img
+                  ngSrc="./delete_angular_icon.png"
+                  alt="Delete employee Icon"
+                  height="24"
+                  width="24"
+                  priority
+                />
+              </button>
+            </div>
           </div>
-        </div>
-      }
+        }
 
-      @if (employeeList().length > 4) {
-        <button (click)="$showAll.set(!$showAll())" class="employees__toggle-visibility">
-          {{ $showAll() ? 'Weniger anzeigen' : 'Alle anzeigen' }}
-        </button>
+        @if (employeeList().length > 4) {
+          <button (click)="$showAll.set(!$showAll())" class="employees__toggle-visibility">
+            {{ $showAll() ? 'Weniger anzeigen' : 'Alle anzeigen' }}
+          </button>
+        }
       }
-    }
-  </article>
+    </article>
+  } @else {
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '20px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '20px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '20px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+  }
 </section>

@@ -1,14 +1,18 @@
 import { Component, input } from '@angular/core';
 import { PlanningData } from '../../../Model/planning-data-model';
 import { NgClass } from '@angular/common';
+import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-planning-overview',
-  imports: [NgClass],
+  imports: [NgClass, NgxSkeletonLoaderComponent],
   templateUrl: './planning-overview.html',
   styleUrl: './planning-overview.scss',
 })
 export class PlanningOverview {
+  featureLoading = input<boolean>(true);
+  employeeLoading = input<boolean>(true);
+
   feData = input<PlanningData>({
     effort: 0,
     capacity: 0,

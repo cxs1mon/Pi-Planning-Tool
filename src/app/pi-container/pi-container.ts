@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { DataService } from '../service/dataService';
 import { PiOverview } from '../pi-overview/pi-overview';
 import { PiResponse } from '../../../Model/pi-model';
@@ -19,6 +19,8 @@ export class PiContainer implements OnInit {
   private dataService = inject(DataService);
   private snackBar = inject(MatSnackBar);
   dialog = inject(MatDialog);
+
+  $loading = signal(true);
 
   createNewPi(piData: PiResponse): void {
     this.dataService.createPi(piData).subscribe({
@@ -73,6 +75,7 @@ export class PiContainer implements OnInit {
     this.dataService.getPis().subscribe({
       next: (piList: PiResponse[]) => {
         this.piList = piList;
+        this.$loading.set(false);
       },
       error: (err) => {
         console.error('Fehler beim abfragen:', err);
@@ -83,6 +86,7 @@ export class PiContainer implements OnInit {
           },
           disableClose: true,
         });
+        this.$loading.set(false);
       },
     });
   }

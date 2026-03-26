@@ -1,9 +1,6 @@
-@if ($currentPi()) {
-  <app-settings-overview
-    [currentPi]="$currentPi()"
-    (sendNewPi)="updateOnePi($event)"
-    (sendOpenDialog)="openDialog($event)"
-  />
-} @else {
-  <p>loading...</p>
-}
+<app-settings-overview
+  [currentPi]="$currentPi()"
+  (sendNewPi)="updateOnePi($event)"
+  (sendOpenDialog)="openDialog($event)"
+  [loading]="$loading()"
+/>

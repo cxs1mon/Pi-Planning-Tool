@@ -21,7 +21,8 @@ export class PlanningContainer implements OnInit {
 
   public $allFeatures: WritableSignal<FeatureResponse[]> = signal<FeatureResponse[]>([]);
   public $allEmployees: WritableSignal<EmployeeResponse[]> = signal<EmployeeResponse[]>([]);
-
+  $featureLoading: WritableSignal<boolean> = signal<boolean>(true);
+  $employeeLoading: WritableSignal<boolean> = signal<boolean>(true);
   public $feData: Signal<PlanningData> = computed<PlanningData>(() => {
     const effort: number = this.$allFeatures().reduce(
       (sum: number, f: FeatureResponse): number => sum + (f.feEffort ?? 0),
@@ -122,6 +123,7 @@ export class PlanningContainer implements OnInit {
     this.dataService.getFeatures(this.piId).subscribe({
       next: (res: FeatureResponse[]) => {
         this.$allFeatures.set(res);
+        this.$featureLoading.set(false);
       },
       error: (err): void => {
         console.error('Fehler beim Abfragen:', err);
@@ -132,6 +134,7 @@ export class PlanningContainer implements OnInit {
           },
           disableClose: true,
         });
+        this.$featureLoading.set(false);
       },
     });
   }
@@ -140,6 +143,7 @@ export class PlanningContainer implements OnInit {
     this.dataService.getEmployees(this.piId).subscribe({
       next: (res: EmployeeResponse[]): void => {
         this.$allEmployees.set(res);
+        this.$employeeLoading.set(false);
       },
       error: (err): void => {
         console.error('Fehler beim Abfragen:', err);
@@ -150,6 +154,7 @@ export class PlanningContainer implements OnInit {
           },
           disableClose: true,
         });
+        this.$employeeLoading.set(false);
       },
     });
   }

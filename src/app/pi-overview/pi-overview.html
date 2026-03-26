@@ -1,74 +1,98 @@
 <section class="pi-overview">
-  <article class="pi-overview__box pi-overview__box--right">
-    <h2>Program Increment auswählen:</h2>
+  @if (!loading()) {
+    <article class="pi-overview__box pi-overview__box--right">
+      <h2>Program Increment auswählen:</h2>
+      <form class="select-pi" (ngSubmit)="selectPiForm()">
+        <mat-form-field>
+          <mat-label>Program Increment</mat-label>
 
-    <form class="select-pi" (ngSubmit)="selectPiForm()">
-      <mat-form-field>
-        <mat-label>Program Increment</mat-label>
+          <select matNativeControl [formControl]="selection">
+            <option [ngValue]="null">Bitte auswählen</option>
+            @for (currentPi of piList(); track currentPi.id) {
+              <option [ngValue]="currentPi.id">{{ currentPi.name }}</option>
+            }
+          </select>
 
-        <select matNativeControl [formControl]="selection">
-          <option [ngValue]="null">Bitte auswählen</option>
-          @for (currentPi of piList(); track currentPi.id) {
-            <option [ngValue]="currentPi.id">{{ currentPi.name }}</option>
+          @if (selection.touched && selection.hasError('required')) {
+            <mat-error>Bitte PI auswählen</mat-error>
           }
-        </select>
+        </mat-form-field>
 
-        @if (selection.touched && selection.hasError('required')) {
-          <mat-error>Bitte PI auswählen</mat-error>
-        }
-      </mat-form-field>
+        <button type="submit" class="select-pi__submit" [class.clicked]="clickedSelect">
+          Auswählen
+        </button>
+      </form>
+    </article>
 
-      <button type="submit" class="select-pi__submit" [class.clicked]="clickedSelect">
-        Auswählen
-      </button>
-    </form>
-  </article>
-
-  <article class="pi-overview__box pi-overview__box--right">
-    <h2>Program Increment erstellen:</h2>
-    <form class="create-pi" (ngSubmit)="sendForm()" [formGroup]="piForm">
-      <mat-form-field class="create-pi__field--name">
-        <mat-label>PI Name</mat-label>
-        <input id="pi-name" matInput placeholder="Z.B. PI 2026 Q1" formControlName="name" />
-        @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('required')) {
-          <mat-error> Bitte Name eingeben</mat-error>
+    <article class="pi-overview__box pi-overview__box--right">
+      <h2>Program Increment erstellen:</h2>
+      <form class="create-pi" (ngSubmit)="sendForm()" [formGroup]="piForm">
+        <mat-form-field class="create-pi__field--name">
+          <mat-label>PI Name</mat-label>
+          <input id="pi-name" matInput placeholder="Z.B. PI 2026 Q1" formControlName="name" />
+          @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('required')) {
+            <mat-error> Bitte Name eingeben</mat-error>
+          }
+          @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('maxlength')) {
+            <mat-error> Name darf nicht länger als 30 Zeichen sein</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="create-pi__field--date-from">
+          <mat-label>Datum von</mat-label>
+          <input
+            id="date-from"
+            matInput
+            placeholder="Z.B. 2026-01-01"
+            formControlName="startDate"
+            type="date"
+          />
+          @if (piForm.get('startDate')?.touched && piForm.get('startDate')?.hasError('required')) {
+            <mat-error> Bitte Startdatum eingeben</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field class="create-pi__field--date-to">
+          <mat-label>Datum bis</mat-label>
+          <input
+            id="date-to"
+            matInput
+            placeholder="Z.B. 2026-01-31"
+            formControlName="endDate"
+            type="date"
+          />
+          @if (piForm.get('endDate')?.touched && piForm.get('endDate')?.hasError('required')) {
+            <mat-error> Bitte Enddatum eingeben</mat-error>
+          }
+        </mat-form-field>
+        @if (piForm.hasError('dateRangeInvalid') && piForm.touched) {
+          <mat-error> Enddatum muss nach dem Startdatum sein</mat-error>
         }
-        @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('maxlength')) {
-          <mat-error> Name darf nicht länger als 30 Zeichen sein</mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field class="create-pi__field--date-from">
-        <mat-label>Datum von</mat-label>
-        <input
-          id="date-from"
-          matInput
-          placeholder="Z.B. 2026-01-01"
-          formControlName="startDate"
-          type="date"
-        />
-        @if (piForm.get('startDate')?.touched && piForm.get('startDate')?.hasError('required')) {
-          <mat-error> Bitte Startdatum eingeben</mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field class="create-pi__field--date-to">
-        <mat-label>Datum bis</mat-label>
-        <input
-          id="date-to"
-          matInput
-          placeholder="Z.B. 2026-01-31"
-          formControlName="endDate"
-          type="date"
-        />
-        @if (piForm.get('endDate')?.touched && piForm.get('endDate')?.hasError('required')) {
-          <mat-error> Bitte Enddatum eingeben</mat-error>
-        }
-      </mat-form-field>
-      @if (piForm.hasError('dateRangeInvalid') && piForm.touched) {
-        <mat-error> Enddatum muss nach dem Startdatum sein</mat-error>
-      }
-      <button type="submit" class="create-pi__submit" [class.clicked]="clickedCreate">
-        Erstellen
-      </button>
-    </form>
-  </article>
+        <button type="submit" class="create-pi__submit" [class.clicked]="clickedCreate">
+          Erstellen
+        </button>
+      </form>
+    </article>
+  } @else {
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '20px',
+          height: '200px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '20px',
+          height: '400px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+  }
 </section>

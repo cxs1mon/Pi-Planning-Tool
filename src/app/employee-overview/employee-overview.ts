@@ -1,10 +1,11 @@
 import { Component, input, output, signal } from '@angular/core';
 import { EmployeeResponse } from '../../../Model/employee-model';
 import { NgOptimizedImage } from '@angular/common';
+import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-employee-overview',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, NgxSkeletonLoaderComponent],
   templateUrl: './employee-overview.html',
   styleUrl: './employee-overview.scss',
 })
@@ -17,6 +18,7 @@ export class EmployeeOverview {
   }>();
 
   $showAll = signal(false);
+  loading = input<boolean>(true);
 
   openCreateDialog() {
     this.sendOpenDialog.emit({

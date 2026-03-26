@@ -1,1 +1,5 @@
-<app-feature-overview (sendOpenDialog)="openDialog($event)" [featureList]="$allFeatures()" />
+<app-feature-overview
+  (sendOpenDialog)="openDialog($event)"
+  [featureList]="$allFeatures()"
+  [loading]="$loading()"
+/>

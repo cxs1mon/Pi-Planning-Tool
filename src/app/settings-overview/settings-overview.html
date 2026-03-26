@@ -1,54 +1,90 @@
 <section class="edit-pi">
   <h2 class="edit-pi__title">PI Einstellungen</h2>
-  <form class="edit-pi__form" (ngSubmit)="updateForm()" [formGroup]="piForm">
-    <mat-form-field class="edit-pi__field--name edit-pi__field">
-      <mat-label>PI Name</mat-label>
-      <input id="pi-name" matInput placeholder="Z.B. PI 2026 Q1" formControlName="name" />
-      @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('required')) {
-        <mat-error> Bitte Name eingeben</mat-error>
+  @if (!loading()) {
+    <form class="edit-pi__form" (ngSubmit)="updateForm()" [formGroup]="piForm">
+      <mat-form-field class="edit-pi__field--name edit-pi__field">
+        <mat-label>PI Name</mat-label>
+        <input id="pi-name" matInput placeholder="Z.B. PI 2026 Q1" formControlName="name" />
+        @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('required')) {
+          <mat-error> Bitte Name eingeben</mat-error>
+        }
+        @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('maxlength')) {
+          <mat-error> Name darf nicht länger als 30 Zeichen sein</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="edit-pi__field--date-from edit-pi__field">
+        <mat-label>Datum von</mat-label>
+        <input
+          id="date-from"
+          matInput
+          placeholder="Z.B. 2026-01-01"
+          formControlName="startDate"
+          type="date"
+        />
+        @if (piForm.get('startDate')?.touched && piForm.get('startDate')?.hasError('required')) {
+          <mat-error> Bitte Startdatum eingeben</mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="edit-pi__field--date-to edit-pi__field">
+        <mat-label>Datum bis</mat-label>
+        <input
+          id="date-to"
+          matInput
+          placeholder="Z.B. 2026-01-31"
+          formControlName="endDate"
+          type="date"
+        />
+        @if (piForm.get('endDate')?.touched && piForm.get('endDate')?.hasError('required')) {
+          <mat-error> Bitte Enddatum eingeben</mat-error>
+        }
+      </mat-form-field>
+      @if (piForm.hasError('dateRangeInvalid') && piForm.touched) {
+        <mat-error> Enddatum muss nach dem Startdatum sein</mat-error>
       }
-      @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('maxlength')) {
-        <mat-error> Name darf nicht länger als 30 Zeichen sein</mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field class="edit-pi__field--date-from edit-pi__field">
-      <mat-label>Datum von</mat-label>
-      <input
-        id="date-from"
-        matInput
-        placeholder="Z.B. 2026-01-01"
-        formControlName="startDate"
-        type="date"
+      <div class="buttons">
+        <button
+          type="button"
+          class="edit-pi__button--delete edit-pi__button"
+          (click)="openDeleteDialog()"
+        >
+          PI Löschen
+        </button>
+        <button type="submit" class="edit-pi__button--submit edit-pi__button">Speichern</button>
+      </div>
+    </form>
+  } @else {
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '5px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
       />
-      @if (piForm.get('startDate')?.touched && piForm.get('startDate')?.hasError('required')) {
-        <mat-error> Bitte Startdatum eingeben</mat-error>
-      }
-    </mat-form-field>
-    <mat-form-field class="edit-pi__field--date-to edit-pi__field">
-      <mat-label>Datum bis</mat-label>
-      <input
-        id="date-to"
-        matInput
-        placeholder="Z.B. 2026-01-31"
-        formControlName="endDate"
-        type="date"
-      />
-      @if (piForm.get('endDate')?.touched && piForm.get('endDate')?.hasError('required')) {
-        <mat-error> Bitte Enddatum eingeben</mat-error>
-      }
-    </mat-form-field>
-    @if (piForm.hasError('dateRangeInvalid') && piForm.touched) {
-      <mat-error> Enddatum muss nach dem Startdatum sein</mat-error>
-    }
-    <div class="buttons">
-      <button
-        type="button"
-        class="edit-pi__button--delete edit-pi__button"
-        (click)="openDeleteDialog()"
-      >
-        PI Löschen
-      </button>
-      <button type="submit" class="edit-pi__button--submit edit-pi__button">Speichern</button>
     </div>
-  </form>
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '5px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '5px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+  }
 </section>

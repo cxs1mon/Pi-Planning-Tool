@@ -16,10 +16,12 @@ import { FeatureResponse } from '../../../Model/feature-model';
 export class FeatureContainer implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private dataService = inject(DataService);
-  private piId = 0;
   dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
 
+  private piId = 0;
+
+  $loading = signal(true);
   public $allFeatures: WritableSignal<FeatureResponse[]> = signal<FeatureResponse[]>([]);
 
   ngOnInit(): void {
@@ -68,6 +70,7 @@ export class FeatureContainer implements OnInit {
     this.dataService.getFeatures(this.piId).subscribe({
       next: (res: FeatureResponse[]) => {
         this.$allFeatures.set(res);
+        this.$loading.set(false);
       },
       error: (err) => {
         console.error('Fehler beim Abfragen:', err);
@@ -78,6 +81,7 @@ export class FeatureContainer implements OnInit {
           },
           disableClose: true,
         });
+        this.$loading.set(false);
       },
     });
   }

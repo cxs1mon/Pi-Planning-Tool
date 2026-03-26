@@ -1,77 +1,117 @@
 <section class="feature">
   <h2 class="feature__title">Featureübersicht</h2>
-  <button
-    class="feature__add-button"
-    (click)="openCreateDialog()"
-    (keydown.esc)="openCreateDialog()"
-  >
-    <img
-      ngSrc="./add_angular_icon.png"
-      alt="Add feature Icon"
-      height="24"
-      width="24"
-      class="feature__add-icon"
-      priority
-    />
-  </button>
-  <article class="feature__list">
-    @if (featureList().length <= 0) {
-      <p class="feature__notice">Keine Features erfasst</p>
-    } @else {
-      @for (
-        feature of $showAll()
-          ? featureList().slice().reverse()
-          : featureList().slice().reverse().slice(0, 4);
-        track feature.id
-      ) {
-        <div class="feature__element">
-          <p class="feature__value feature__value--number">
-            {{ feature.featureNumber }}
-          </p>
+  @if (!loading()) {
+    <button
+      class="feature__add-button"
+      (click)="openCreateDialog()"
+      (keydown.esc)="openCreateDialog()"
+    >
+      <img
+        ngSrc="./add_angular_icon.png"
+        alt="Add feature Icon"
+        height="24"
+        width="24"
+        class="feature__add-icon"
+        priority
+      />
+    </button>
+    <article class="feature__list">
+      @if (featureList().length <= 0) {
+        <p class="feature__notice">Keine Features erfasst</p>
+      } @else {
+        @for (
+          feature of $showAll()
+            ? featureList().slice().reverse()
+            : featureList().slice().reverse().slice(0, 4);
+          track feature.id
+        ) {
+          <div class="feature__element">
+            <p class="feature__value feature__value--number">
+              {{ feature.featureNumber }}
+            </p>
 
-          <p class="feature__value feature__value--title">
-            {{ feature.title }}
-          </p>
+            <p class="feature__value feature__value--title">
+              {{ feature.title }}
+            </p>
 
-          <p class="feature__value feature__value--description">
-            {{ feature.description }}
-          </p>
+            <p class="feature__value feature__value--description">
+              {{ feature.description }}
+            </p>
 
-          <p class="feature__value feature__value--fe-effort">FE Aufwand: {{ feature.feEffort }}</p>
+            <p class="feature__value feature__value--fe-effort">
+              FE Aufwand: {{ feature.feEffort }}
+            </p>
 
-          <p class="feature__value feature__value--be-effort">BE Aufwand: {{ feature.beEffort }}</p>
-          <button
-            class="feature__edit-button feature__edit-button--edit"
-            (click)="openEditDialog(feature)"
-          >
-            <img
-              ngSrc="./edit_angular_icon.png"
-              alt="Edit feature Icon"
-              height="24"
-              width="24"
-              priority
-            />
+            <p class="feature__value feature__value--be-effort">
+              BE Aufwand: {{ feature.beEffort }}
+            </p>
+            <button
+              class="feature__edit-button feature__edit-button--edit"
+              (click)="openEditDialog(feature)"
+            >
+              <img
+                ngSrc="./edit_angular_icon.png"
+                alt="Edit feature Icon"
+                height="24"
+                width="24"
+                priority
+              />
+            </button>
+            <button
+              class="feature__edit-button feature__edit-button--delete"
+              (click)="openDeleteDialog(feature)"
+            >
+              <img
+                ngSrc="./delete_angular_icon.png"
+                alt="Delete feature Icon"
+                height="24"
+                width="24"
+                priority
+              />
+            </button>
+          </div>
+        }
+
+        @if (featureList().length > 4) {
+          <button (click)="$showAll.set(!$showAll())" class="feature__toggle-visibility">
+            {{ $showAll() ? 'Weniger anzeigen' : 'Alle anzeigen' }}
           </button>
-          <button
-            class="feature__edit-button feature__edit-button--delete"
-            (click)="openDeleteDialog(feature)"
-          >
-            <img
-              ngSrc="./delete_angular_icon.png"
-              alt="Delete feature Icon"
-              height="24"
-              width="24"
-              priority
-            />
-          </button>
-        </div>
+        }
       }
-
-      @if (featureList().length > 4) {
-        <button (click)="$showAll.set(!$showAll())" class="feature__toggle-visibility">
-          {{ $showAll() ? 'Weniger anzeigen' : 'Alle anzeigen' }}
-        </button>
-      }
-    }
-  </article>
+    </article>
+  } @else {
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '20px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '20px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+    <div class="loading">
+      <ngx-skeleton-loader
+        appearance="line"
+        [theme]="{
+          'border-radius': '20px',
+          height: '48px',
+          'background-color': '#eceeef',
+          margin: '5px 0',
+        }"
+      />
+    </div>
+  }
 </section>

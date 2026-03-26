@@ -11,6 +11,7 @@ import {
 } from '@angular/forms';
 import { MatError, MatFormField, MatInputModule, MatLabel } from '@angular/material/input';
 import { PiResponse } from '../../../Model/pi-model';
+import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 
 @Component({
   selector: 'app-pi-overview',
@@ -22,12 +23,14 @@ import { PiResponse } from '../../../Model/pi-model';
     MatError,
     MatInputModule,
     MatButtonModule,
+    NgxSkeletonLoaderComponent,
   ],
   templateUrl: './pi-overview.html',
   styleUrl: './pi-overview.scss',
 })
 export class PiOverview {
   piList = input<PiResponse[]>([]);
+  loading = input<boolean>(true);
   sendCreateClick = output<PiResponse>();
   sendSelectClick = output<number>();
 
