@@ -84,7 +84,7 @@ export class PlanningContainer implements OnInit {
   }
 
   getPathId(): void {
-    this.activeRoute.paramMap.subscribe((pm): void => {
+    this.activeRoute.paramMap.subscribe((pm) => {
       const rawId = pm.get('id');
 
       // check ob es vorhanden ist
@@ -99,8 +99,17 @@ export class PlanningContainer implements OnInit {
       if (!Number.isFinite(id)) {
         return;
       }
-
       this.piId = id;
+
+      this.dataService.getOnePi(this.piId).subscribe({
+        next: (pi) => {
+          this.dataService.setPi(pi);
+        },
+        error: (err) => {
+          console.error('Fehler beim Laden des PI:', err);
+        },
+      });
+
       this.getFeatures();
       this.getEmployees();
     });

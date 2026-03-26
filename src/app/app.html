@@ -1,5 +1,5 @@
 <section [ngClass]="themeClass" class="app__container">
-  <app-header [themeColor]="themeColor" />
+  <app-header [themeColor]="themeColor" [piName]="piName()" />
   @if (this.router.url !== '/') {
     <app-navigation />
   }

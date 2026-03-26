@@ -12,7 +12,7 @@ import { FeatureResponse } from '../../../Model/feature-model';
 export class DataService {
   private http: HttpClient = inject(HttpClient);
   private baseUrl = 'http://localhost:3001';
-  pi = signal<number | null>(null);
+  currentPi = signal<PiResponse | null>(null);
 
   // API status
 
@@ -21,8 +21,8 @@ export class DataService {
   }
 
   // PI State
-  setPi(pi: number) {
-    this.pi.set(pi);
+  setPi(pi: PiResponse) {
+    this.currentPi.set(pi);
   }
 
   // Program Increments

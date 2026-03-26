@@ -4,6 +4,7 @@ import { PiOverview } from '../pi-overview/pi-overview';
 import { PiResponse } from '../../../Model/pi-model';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-pi-container',
   imports: [PiOverview],
@@ -19,10 +20,8 @@ export class PiContainer implements OnInit {
   createNewPi(piData: PiResponse): void {
     this.dataService.createPi(piData).subscribe({
       next: (createdPi: PiResponse) => {
-        this.setPiId(createdPi.id!);
-        setTimeout(() => {
-          this.navigate(createdPi.id!);
-        }, 400);
+        this.setPi(createdPi!);
+        this.navigate(createdPi.id!);
         this.snackBar.open('PI erfolgreich erstellt', 'OK', {
           duration: 3000,
         });
@@ -34,9 +33,15 @@ export class PiContainer implements OnInit {
   }
 
   selectPi(selectedPiId: number): void {
-    setTimeout(() => {
-      this.navigate(selectedPiId);
-    }, 400);
+    this.dataService.getOnePi(selectedPiId).subscribe({
+      next: (pi: PiResponse) => {
+        this.setPi(pi);
+        this.navigate(selectedPiId);
+      },
+      error: (err) => {
+        console.error('Fehler beim Laden des PI:', err);
+      },
+    });
   }
 
   navigate(selectedPiId: number): void {
@@ -58,7 +63,7 @@ export class PiContainer implements OnInit {
     });
   }
 
-  setPiId(piId: number): void {
-    this.dataService.setPi(piId);
+  setPi(pi: PiResponse): void {
+    this.dataService.setPi(pi);
   }
 }

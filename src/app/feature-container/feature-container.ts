@@ -26,7 +26,7 @@ export class FeatureContainer implements OnInit {
     this.getPathId();
   }
 
-  getPathId() {
+  getPathId(): void {
     this.activeRoute.paramMap.subscribe((pm) => {
       const rawId = pm.get('id');
 
@@ -42,8 +42,17 @@ export class FeatureContainer implements OnInit {
       if (!Number.isFinite(id)) {
         return;
       }
-
       this.piId = id;
+
+      this.dataService.getOnePi(this.piId).subscribe({
+        next: (pi) => {
+          this.dataService.setPi(pi);
+        },
+        error: (err) => {
+          console.error('Fehler beim Laden des PI:', err);
+        },
+      });
+
       this.getFeatures();
     });
   }

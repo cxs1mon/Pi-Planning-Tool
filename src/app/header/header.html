@@ -1,14 +1,17 @@
 <section class="header">
-  <h1 class="header__title header__title--{{ themeColor }}">PI Planungstool</h1>
+  <h1 class="header__title header__title--{{ themeColor() }}">PI Planungstool</h1>
+  @if (piName()) {
+    <p class="header__pi-name">{{ piName() }}</p>
+  }
   <img
-    ngSrc="./Logo_{{ themeColor }}.png"
-    alt="{{ themeColor }} Logo"
+    ngSrc="./Logo_{{ themeColor() }}.png"
+    alt="{{ themeColor() }} Logo"
     height="497"
     width="1280"
-    class="header__logo header__logo--{{ themeColor }}"
+    class="header__logo header__logo--{{ themeColor() }}"
     priority
   />
 </section>
-@if (themeColor === 'blue') {
+@if (themeColor() === 'blue') {
   <hr class="header__horizontal-line" />
 }

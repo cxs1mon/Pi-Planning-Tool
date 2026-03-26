@@ -25,12 +25,17 @@ export class SettingsContainer implements OnInit {
   public currentPi: PiResponse | undefined;
 
   ngOnInit(): void {
+    this.getPathId();
+  }
+
+  getPathId(): void {
     this.activeRoute.paramMap.subscribe((pm) => {
       const rawId = pm.get('id');
 
       // check ob es vorhanden ist
       if (rawId === null) {
         console.error('Id nicht gefunden');
+        return;
       }
 
       const id = Number(rawId);
@@ -39,9 +44,16 @@ export class SettingsContainer implements OnInit {
       if (!Number.isFinite(id)) {
         return;
       }
-
       this.piId = id;
-      this.getOnePi(id);
+
+      this.dataService.getOnePi(this.piId).subscribe({
+        next: (pi) => {
+          this.dataService.setPi(pi);
+        },
+        error: (err) => {
+          console.error('Fehler beim Laden des PI:', err);
+        },
+      });
     });
   }
 

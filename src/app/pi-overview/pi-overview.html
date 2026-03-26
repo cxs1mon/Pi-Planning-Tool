@@ -8,8 +8,8 @@
 
         <select matNativeControl [formControl]="selection">
           <option [ngValue]="null">Bitte auswählen</option>
-          @for (pi of piList(); track pi.id) {
-            <option [ngValue]="pi.id">{{ pi.name }}</option>
+          @for (currentPi of piList(); track currentPi.id) {
+            <option [ngValue]="currentPi.id">{{ currentPi.name }}</option>
           }
         </select>
 

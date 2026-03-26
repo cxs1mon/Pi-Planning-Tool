@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
@@ -8,5 +8,6 @@ import { NgOptimizedImage } from '@angular/common';
   styleUrl: './header.scss',
 })
 export class Header {
-  @Input() themeColor = 'blue';
+  themeColor = input('blue');
+  piName = input('');
 }
