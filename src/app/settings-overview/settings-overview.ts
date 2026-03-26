@@ -19,7 +19,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
   styleUrl: './settings-overview.scss',
 })
 export class SettingsOverview {
-  currentPi = input<PiResponse>();
+  currentPi = input<PiResponse | null>(null);
 
   sendNewPi = output<PiResponse>();
   sendOpenDialog = output<{
@@ -31,7 +31,7 @@ export class SettingsOverview {
   piForm = new FormGroup(
     {
       name: new FormControl<string>('', {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.maxLength(30)],
         nonNullable: true,
       }),
       startDate: new FormControl<string>('', {
@@ -75,10 +75,16 @@ export class SettingsOverview {
   }
 
   openDeleteDialog(): void {
+    const pi = this.currentPi();
+
+    if (!pi) {
+      return;
+    }
+
     this.sendOpenDialog.emit({
       mode: 'delete',
       type: 'pi',
-      pi: this.currentPi(),
+      pi,
     });
   }
 

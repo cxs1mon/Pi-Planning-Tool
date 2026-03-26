@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { SettingsOverview } from '../settings-overview/settings-overview';
 import { PiResponse } from '../../../Model/pi-model';
 import { DataService } from '../service/dataService';
@@ -22,7 +22,7 @@ export class SettingsContainer implements OnInit {
 
   public piId = 0;
 
-  public currentPi: PiResponse | undefined;
+  $currentPi = signal<PiResponse | null>(null);
 
   ngOnInit(): void {
     this.getPathId();
@@ -48,6 +48,7 @@ export class SettingsContainer implements OnInit {
 
       this.dataService.getOnePi(this.piId).subscribe({
         next: (pi) => {
+          this.$currentPi.set(pi);
           this.dataService.setPi(pi);
         },
         error: (err) => {
@@ -71,17 +72,6 @@ export class SettingsContainer implements OnInit {
       });
   }
 
-  getOnePi(id: number): void {
-    this.dataService.getOnePi(id).subscribe({
-      next: (res: PiResponse) => {
-        this.currentPi = res;
-      },
-      error: (err) => {
-        console.error('Fehler beim Abfragen:', err);
-      },
-    });
-  }
-
   updateOnePi(newPi: PiResponse): void {
     const updatedPi: PiResponse = {
       ...newPi,
@@ -90,7 +80,7 @@ export class SettingsContainer implements OnInit {
 
     this.dataService.updatePi(updatedPi).subscribe({
       next: (res: PiResponse) => {
-        this.currentPi = res;
+        this.$currentPi.set(res);
         this.snackBar.open('PI erfolgreich gelöscht', 'OK', {
           duration: 3000,
         });

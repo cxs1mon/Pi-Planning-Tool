@@ -1,11 +1,14 @@
-<section class="settings">
-  <h2 class="dialog__title">PI Einstellungen</h2>
-  <form class="edit-pi" (ngSubmit)="updateForm()" [formGroup]="piForm">
+<section class="edit-pi">
+  <h2 class="edit-pi__title">PI Einstellungen</h2>
+  <form class="edit-pi__form" (ngSubmit)="updateForm()" [formGroup]="piForm">
     <mat-form-field class="edit-pi__field--name edit-pi__field">
       <mat-label>PI Name</mat-label>
       <input id="pi-name" matInput placeholder="Z.B. PI 2026 Q1" formControlName="name" />
       @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('required')) {
         <mat-error> Bitte Name eingeben</mat-error>
+      }
+      @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('maxlength')) {
+        <mat-error> Name darf nicht länger als 30 Zeichen sein</mat-error>
       }
     </mat-form-field>
     <mat-form-field class="edit-pi__field--date-from edit-pi__field">

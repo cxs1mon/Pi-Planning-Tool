@@ -33,6 +33,9 @@
         @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('required')) {
           <mat-error> Bitte Name eingeben</mat-error>
         }
+        @if (piForm.get('name')?.touched && piForm.get('name')?.hasError('maxlength')) {
+          <mat-error> Name darf nicht länger als 30 Zeichen sein</mat-error>
+        }
       </mat-form-field>
       <mat-form-field class="create-pi__field--date-from">
         <mat-label>Datum von</mat-label>

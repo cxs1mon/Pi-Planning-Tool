@@ -18,7 +18,7 @@
 }
 
 .header__logo {
-  width: 200px;
+  width: 20%;
   height: auto;
 }
 
@@ -28,6 +28,8 @@
   border: 1px solid #2167ae;
   color: #2167ae;
   font-size: 20px;
+  line-break: anywhere;
+  max-width: 40%;
 }
 
 .header__horizontal-line {

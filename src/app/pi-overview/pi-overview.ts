@@ -38,7 +38,9 @@ export class PiOverview {
 
   piForm = new FormGroup(
     {
-      name: new FormControl<string>('', { validators: [Validators.required] }),
+      name: new FormControl<string>('', {
+        validators: [Validators.required, Validators.maxLength(30)],
+      }),
       startDate: new FormControl<string>('', { validators: [Validators.required] }),
       endDate: new FormControl<string>('', { validators: [Validators.required] }),
     },

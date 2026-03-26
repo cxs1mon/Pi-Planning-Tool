@@ -1,20 +1,24 @@
-.settings {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+.edit-pi {
   max-width: 1200px;
   margin: auto;
+  padding: 16px 0;
 }
 
-.edit-pi {
+.edit-pi__title {
+  color: #23366f;
+}
+
+.edit-pi__form {
   display: flex;
   flex-direction: column;
 }
+
 .buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 .edit-pi__button {
   padding: 10px;
   border-radius: 25px;
