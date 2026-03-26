@@ -1,1 +1,33 @@
-<p>planning-overview works!</p>
+<section class="status">
+  <h2 class="status__title">Planungsübersicht</h2>
+
+  <div class="status__container">
+    @for (item of statusList; track item.title) {
+      <article class="status-card">
+        <h3 class="status-card__title">{{ item.title }}:</h3>
+
+        <div class="status-card__box">
+          <div class="status-card__row">
+            <p>Mitarbeiterkapazität:</p>
+            <p>{{ item.data().capacity }}</p>
+          </div>
+
+          <div class="status-card__row">
+            <p>Featureaufwand:</p>
+            <p>{{ item.data().effort }}</p>
+          </div>
+
+          @if (item.data().remaining >= 0) {
+            <div class="status-card__row">
+              <p>Verbleibende Kapazität:</p>
+              <p>{{ item.data().remaining }}</p>
+            </div>
+          }
+        </div>
+        <p class="status__tag" [ngClass]="getStatusClass(item.data().status)">
+          {{ item.data().status }}
+        </p>
+      </article>
+    }
+  </div>
+</section>
