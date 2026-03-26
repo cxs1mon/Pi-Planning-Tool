@@ -5,6 +5,7 @@
       class="feature__add-button"
       (click)="openCreateDialog()"
       (keydown.esc)="openCreateDialog()"
+      [class.clickedAdd]="clickedAdd"
     >
       <img
         ngSrc="./add_angular_icon.png"

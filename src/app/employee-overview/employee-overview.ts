@@ -20,7 +20,10 @@ export class EmployeeOverview {
   $showAll = signal(false);
   loading = input<boolean>(true);
 
+  clickedAdd = false;
+
   openCreateDialog() {
+    this.clickedAdd = true;
     this.sendOpenDialog.emit({
       mode: 'create',
       type: 'employee',

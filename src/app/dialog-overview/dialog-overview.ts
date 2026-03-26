@@ -38,6 +38,10 @@ export class DialogOverview {
   sendDeleteClick = output<void>();
   sendCancelClick = output<void>();
 
+  clickedSave = false;
+  clickedDelete = false;
+  clickedCancel = false;
+
   featureEffortValidator(): ValidatorFn {
     return (form: AbstractControl): ValidationErrors | null => {
       const feControl = form.get('effortFe');
@@ -140,6 +144,7 @@ export class DialogOverview {
         feCapacity: this.employeeForm.controls.capacityFe.value ?? 0,
         beCapacity: this.employeeForm.controls.capacityBe.value ?? 0,
       };
+      this.clickedSave = true;
       this.sendSaveClick.emit(newEmployee);
     } else {
       console.warn('Fehlerhafte eingabe');
@@ -157,7 +162,7 @@ export class DialogOverview {
         feEffort: this.featureForm.controls.effortFe.value ?? 0,
         beEffort: this.featureForm.controls.effortBe.value ?? 0,
       };
-
+      this.clickedSave = true;
       this.sendSaveClick.emit(newFeature);
     } else {
       console.warn('Fehlerhafte Eingabe');
@@ -165,10 +170,12 @@ export class DialogOverview {
   }
 
   onDeleteClick(): void {
+    this.clickedDelete = true;
     this.sendDeleteClick.emit();
   }
 
   onCancelClick(): void {
+    this.clickedCancel = true;
     this.sendCancelClick.emit();
   }
 }

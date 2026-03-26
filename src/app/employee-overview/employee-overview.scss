@@ -64,3 +64,19 @@
 .loading {
   grid-column: 1 / -1;
 }
+
+.clickedAdd {
+  animation: clickScale 0.2s ease;
+}
+
+@keyframes clickScale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

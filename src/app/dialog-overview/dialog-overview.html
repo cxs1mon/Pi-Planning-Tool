@@ -24,10 +24,20 @@
       <p class="dialog__delete-hint">Möchten Sie dieses PI wirklich löschen?</p>
     }
     <div class="dialog__delete-buttons">
-      <button class="dialog__button dialog__button--cancel" type="button" (click)="onCancelClick()">
+      <button
+        class="dialog__button dialog__button--cancel"
+        type="button"
+        (click)="onCancelClick()"
+        [class.clickedCancel]="clickedCancel"
+      >
         Abbrechen
       </button>
-      <button class="dialog__button dialog__button--delete" type="button" (click)="onDeleteClick()">
+      <button
+        class="dialog__button dialog__button--delete"
+        type="button"
+        (click)="onDeleteClick()"
+        [class.clickedDelete]="clickedDelete"
+      >
         Löschen
       </button>
     </div>
@@ -92,7 +102,13 @@
           <mat-error>Die Kapazität darf nicht negativ sein</mat-error>
         }
       </mat-form-field>
-      <button class="dialog__button dialog__button--submit" type="submit">Speichern</button>
+      <button
+        class="dialog__button dialog__button--submit"
+        type="submit"
+        [class.clickedSave]="clickedSave"
+      >
+        Speichern
+      </button>
     </form>
   } @else if (type() === 'feature') {
     <h3 class="dialog__title">
@@ -190,7 +206,13 @@
       ) {
         <div class="dialog__form-error">Mindestens FE oder BE Aufwand muss grösser als 0 sein</div>
       }
-      <button class="dialog__button dialog__button--submit" type="submit">Speichern</button>
+      <button
+        class="dialog__button dialog__button--submit"
+        type="submit"
+        [class.clickedSave]="clickedSave"
+      >
+        Speichern
+      </button>
     </form>
   } @else {
     @if (mode() === 'backend-unavailable') {

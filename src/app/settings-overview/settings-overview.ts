@@ -38,6 +38,9 @@ export class SettingsOverview {
     pi?: PiResponse;
   }>();
 
+  clickedSave = false;
+  clickedDelete = false;
+
   piForm = new FormGroup(
     {
       name: new FormControl<string>('', {
@@ -69,6 +72,7 @@ export class SettingsOverview {
   }
 
   updateForm(): void {
+    this.clickedSave = true;
     this.piForm.markAllAsTouched();
 
     if (this.piForm.invalid) {
@@ -85,17 +89,18 @@ export class SettingsOverview {
   }
 
   openDeleteDialog(): void {
+    this.clickedDelete = true;
     const pi = this.currentPi();
 
     if (!pi) {
       return;
     }
-
     this.sendOpenDialog.emit({
       mode: 'delete',
       type: 'pi',
       pi,
     });
+    this.clickedDelete = false;
   }
 
   dateValidator(control: AbstractControl): ValidationErrors | null {

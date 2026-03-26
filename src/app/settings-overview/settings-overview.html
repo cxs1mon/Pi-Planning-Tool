@@ -46,10 +46,17 @@
           type="button"
           class="edit-pi__button--delete edit-pi__button"
           (click)="openDeleteDialog()"
+          [class.clickedDelete]="clickedDelete"
         >
           PI Löschen
         </button>
-        <button type="submit" class="edit-pi__button--submit edit-pi__button">Speichern</button>
+        <button
+          type="submit"
+          class="edit-pi__button--submit edit-pi__button"
+          [class.clickedSave]="clickedSave"
+        >
+          Speichern
+        </button>
       </div>
     </form>
   } @else {

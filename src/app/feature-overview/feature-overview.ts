@@ -20,8 +20,9 @@ export class FeatureOverview {
   }>();
 
   $showAll = signal(false);
-
+  clickedAdd = false;
   openCreateDialog() {
+    this.clickedAdd = true;
     this.sendOpenDialog.emit({
       mode: 'create',
       type: 'feature',
