@@ -15,9 +15,17 @@ export class DataService {
   currentPi = signal<PiResponse | null>(null);
 
   // API status
+  healthStatus = signal<'ok' | 'down'>('ok');
 
   getHealth(): Observable<HealthResponse> {
     return this.http.get<HealthResponse>(`${this.baseUrl}/health`);
+  }
+
+  checkHealth(): void {
+    this.getHealth().subscribe({
+      next: () => this.healthStatus.set('ok'),
+      error: () => this.healthStatus.set('down'),
+    });
   }
 
   // PI State

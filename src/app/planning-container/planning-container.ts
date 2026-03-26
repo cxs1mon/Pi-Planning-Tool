@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../service/dataService';
 import { EmployeeResponse } from '../../../Model/employee-model';
 import { PlanningData } from '../../../Model/planning-data-model';
+import { DialogContainer } from '../dialog-container/dialog-container';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-planning-container',
@@ -15,6 +17,7 @@ import { PlanningData } from '../../../Model/planning-data-model';
 export class PlanningContainer implements OnInit {
   private activeRoute = inject(ActivatedRoute);
   private dataService = inject(DataService);
+  dialog = inject(MatDialog);
 
   public $allFeatures: WritableSignal<FeatureResponse[]> = signal<FeatureResponse[]>([]);
   public $allEmployees: WritableSignal<EmployeeResponse[]> = signal<EmployeeResponse[]>([]);
@@ -122,6 +125,13 @@ export class PlanningContainer implements OnInit {
       },
       error: (err): void => {
         console.error('Fehler beim Abfragen:', err);
+        this.dialog.open(DialogContainer, {
+          data: {
+            type: 'error',
+            mode: 'backend-unavailable',
+          },
+          disableClose: true,
+        });
       },
     });
   }
@@ -133,6 +143,13 @@ export class PlanningContainer implements OnInit {
       },
       error: (err): void => {
         console.error('Fehler beim Abfragen:', err);
+        this.dialog.open(DialogContainer, {
+          data: {
+            type: 'error',
+            mode: 'backend-unavailable',
+          },
+          disableClose: true,
+        });
       },
     });
   }

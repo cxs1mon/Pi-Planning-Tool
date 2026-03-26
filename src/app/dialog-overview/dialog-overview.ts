@@ -29,10 +29,11 @@ import { FeatureResponse } from '../../../Model/feature-model';
   styleUrl: './dialog-overview.scss',
 })
 export class DialogOverview {
-  mode = input<'create' | 'edit' | 'delete'>('create');
-  type = input<'employee' | 'feature' | 'pi'>('employee');
+  mode = input<'create' | 'edit' | 'delete' | 'backend-unavailable' | 'unexpected-error'>('create');
+  type = input<'employee' | 'feature' | 'pi' | 'error'>('employee');
   employee = input<EmployeeResponse>();
   feature = input<FeatureResponse>();
+  errorMsg = input<string>('');
   sendSaveClick = output<EmployeeResponse | FeatureResponse>();
   sendDeleteClick = output<void>();
   sendCancelClick = output<void>();

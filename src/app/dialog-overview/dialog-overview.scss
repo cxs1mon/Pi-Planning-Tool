@@ -37,9 +37,11 @@
   grid-column: span 2;
 }
 
-.dialog__delete-hint {
-  margin-top: 0;
-  padding: 0 32px;
+.dialog__delete-hint,
+.dialog__error-text,
+.dialog__error-message {
+  margin: 0 32px;
+  padding: 0 0;
 }
 
 .dialog__delete-buttons {
@@ -79,4 +81,9 @@
   color: #ba1a1a;
   font-size: 14px;
   margin-top: -8px;
+}
+
+.dialog__error-message {
+  padding: 10px 0;
+  font-style: italic;
 }

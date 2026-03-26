@@ -50,6 +50,13 @@ export class FeatureContainer implements OnInit {
         },
         error: (err) => {
           console.error('Fehler beim Laden des PI:', err);
+          this.dialog.open(DialogContainer, {
+            data: {
+              type: 'error',
+              mode: 'backend-unavailable',
+            },
+            disableClose: true,
+          });
         },
       });
 
@@ -64,6 +71,13 @@ export class FeatureContainer implements OnInit {
       },
       error: (err) => {
         console.error('Fehler beim Abfragen:', err);
+        this.dialog.open(DialogContainer, {
+          data: {
+            type: 'error',
+            mode: 'backend-unavailable',
+          },
+          disableClose: true,
+        });
       },
     });
   }
@@ -114,6 +128,13 @@ export class FeatureContainer implements OnInit {
       },
       error: (err) => {
         console.error('Fehler beim Erstellen:', err);
+        this.dialog.open(DialogContainer, {
+          data: {
+            type: 'error',
+            mode: 'backend-unavailable',
+          },
+          disableClose: true,
+        });
       },
     });
   }
@@ -128,6 +149,13 @@ export class FeatureContainer implements OnInit {
       },
       error: (err) => {
         console.error('Fehler beim Aktualisieren:', err);
+        this.dialog.open(DialogContainer, {
+          data: {
+            type: 'error',
+            mode: 'backend-unavailable',
+          },
+          disableClose: true,
+        });
       },
     });
   }
@@ -143,6 +171,13 @@ export class FeatureContainer implements OnInit {
       },
       error: (err) => {
         console.error('Fehler beim Löschen:', err);
+        this.dialog.open(DialogContainer, {
+          data: {
+            type: 'error',
+            mode: 'backend-unavailable',
+          },
+          disableClose: true,
+        });
       },
     });
   }
